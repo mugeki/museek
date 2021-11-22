@@ -6,7 +6,7 @@ const Register = forwardRef((props, ref) => {
 		<div className={`${styles.background} modal d-flex justify-content-center`}>
 			<div
 				className="bg-white my-auto pb-2 rounded"
-				style={{ border: "1px solid #8f8d8d", width: "35%" }}
+				style={{ width: "35%" }}
 				ref={ref}
 			>
 				<h1 className="fw-bold text-center p-5 pb-4">Join to Museek</h1>
@@ -14,22 +14,27 @@ const Register = forwardRef((props, ref) => {
 					<input
 						className={`${styles.input} form-control px-3 py-2 mb-4`}
 						placeholder="Username"
+						type="text"
 					/>
 					<input
 						className={`${styles.input} form-control px-3 py-2 mb-4`}
 						placeholder="Email"
+						type="email"
 					/>
 					<input
 						className={`${styles.input} form-control px-3 py-2 mb-4`}
 						placeholder="Password"
+						type="password"
 					/>
 					<input
 						className={`${styles.input} form-control px-3 py-2 mb-4`}
 						placeholder="Nama Lengkap"
+						type="text"
 					/>
 					<input
 						className={`${styles.input} form-control px-3 py-2 mb-4`}
 						placeholder="No. Handphone"
+						type="number"
 					/>
 					<button
 						className={`border-0 fw-bolder text-white ${styles.button} rounded p-2 w-100`}
