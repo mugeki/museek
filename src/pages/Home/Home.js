@@ -1,7 +1,6 @@
 import Navbar from "../../components/Navbar";
 import NavbarGuest from "../../components/NavbarGuest";
 import SearchInput from "./SearchInput";
-import Footer from "../../components/Footer";
 import MusicianCard from "./MusicianCard";
 import styles from "./Home.module.css";
 
