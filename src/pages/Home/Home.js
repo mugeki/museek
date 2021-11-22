@@ -7,7 +7,7 @@ import styles from "./Home.module.css";
 
 export default function Home() {
 	return (
-		<div className="pb-4">
+		<div className="pb-5">
 			<NavbarGuest />
 			<div className={styles.hero}>
 				<div className={`${styles.overlay} p-5`}>
@@ -19,23 +19,23 @@ export default function Home() {
 						<SearchInput />
 					</div>
 				</div>
-				<div className="container my-5">
-					<h1 className="fw-bold">Musisi popular</h1>
-					<div className="d-flex justify-content-between py-3">
-						<MusicianCard />
-						<MusicianCard />
-						<MusicianCard />
-						<MusicianCard />
-					</div>
+			</div>
+			<div className="container my-5">
+				<h1 className="fw-bold">Musisi popular</h1>
+				<div className="d-flex justify-content-between py-3">
+					<MusicianCard />
+					<MusicianCard />
+					<MusicianCard />
+					<MusicianCard />
 				</div>
-				<div className="container my-5">
-					<h1 className="fw-bold">Musisi terbaru</h1>
-					<div className="d-flex justify-content-between py-3">
-						<MusicianCard />
-						<MusicianCard />
-						<MusicianCard />
-						<MusicianCard />
-					</div>
+			</div>
+			<div className="container my-5">
+				<h1 className="fw-bold">Musisi terbaru</h1>
+				<div className="d-flex justify-content-between py-3">
+					<MusicianCard />
+					<MusicianCard />
+					<MusicianCard />
+					<MusicianCard />
 				</div>
 			</div>
 		</div>
