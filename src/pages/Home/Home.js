@@ -6,7 +6,7 @@ import styles from "./Home.module.css";
 
 export default function Home() {
 	return (
-		<div className="pb-5">
+		<div className="pb-3">
 			<NavbarGuest />
 			<div className={styles.hero}>
 				<div className={`${styles.overlay} p-5`}>
