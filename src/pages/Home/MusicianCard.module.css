@@ -1,0 +1,12 @@
+.musician {
+	height: 390px;
+	width: 22%;
+}
+
+.overlay {
+	background: linear-gradient(
+		180deg,
+		rgba(0, 0, 0, 0.7) 0%,
+		rgba(91, 91, 91, 0) 38.02%
+	);
+}

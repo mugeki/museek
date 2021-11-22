@@ -1,0 +1,14 @@
+.hero {
+	background: url("../../hero-background.jpg");
+	background-size: cover;
+	height: 345px;
+}
+
+.overlay {
+	background: linear-gradient(
+		180deg,
+		rgba(0, 0, 0, 0.3) 0%,
+		rgba(0, 0, 0, 0) 100%
+	);
+	height: inherit;
+}
