@@ -13,7 +13,10 @@ export default function Explore() {
 			<div className="container mt-4">
 				<h1 className="fw-bold">Cari musisi</h1>
 			</div>
-			<div className="container mt-4 d-flex flex-column flex-md-row sticky-top bg-white w-100 py-4">
+			<div
+				className="container mt-4 d-flex flex-column flex-md-row sticky-top bg-white w-100 py-4"
+				style={{ zIndex: 1 }}
+			>
 				<SearchLokasiInput />
 				<div className="d-flex flex-row mt-3 mt-md-0">
 					<CategoryDropdown />

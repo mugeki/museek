@@ -5,12 +5,11 @@ const Register = forwardRef((props, ref) => {
 	return (
 		<div className={`${styles.background} modal d-flex justify-content-center`}>
 			<div
-				className="bg-white my-auto pb-2 rounded"
-				style={{ width: "35%" }}
+				className={`${styles.container} bg-white my-auto pb-2 rounded`}
 				ref={ref}
 			>
-				<h1 className="fw-bold text-center p-5 pb-4">Join to Museek</h1>
-				<div className="px-5">
+				<h2 className="fw-bold text-center p-5 pb-4">Join to Museek</h2>
+				<div className="px-4 px-md-5">
 					<input
 						className={`${styles.input} form-control px-3 py-2 mb-4`}
 						placeholder="Username"
