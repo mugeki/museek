@@ -1,6 +1,6 @@
 .input {
 	border: 0;
-	width: 350px;
+	width: fit-content;
 }
 
 .input:focus {
@@ -19,4 +19,10 @@
 
 .searchbar {
 	width: fit-content;
+}
+
+@media (min-width: 768px) {
+	.input {
+		width: 350px;
+	}
 }

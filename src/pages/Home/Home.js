@@ -9,7 +9,7 @@ export default function Home() {
 		<div className="pb-3">
 			<NavbarGuest />
 			<div className={styles.hero}>
-				<div className={`${styles.overlay} p-5`}>
+				<div className={`${styles.overlay} p-2 p-md-5`}>
 					<div className="container mt-4">
 						<div className="fw-bold fs-1 text-white">
 							<p className="mb-0">Cari musisi yang pas</p>
@@ -21,7 +21,7 @@ export default function Home() {
 			</div>
 			<div className="container my-5">
 				<h1 className="fw-bold">Musisi popular</h1>
-				<div className="d-flex justify-content-between py-3">
+				<div className="d-flex flex-wrap justify-content-between py-3">
 					<MusicianCard />
 					<MusicianCard />
 					<MusicianCard />
@@ -30,7 +30,7 @@ export default function Home() {
 			</div>
 			<div className="container my-5">
 				<h1 className="fw-bold">Musisi terbaru</h1>
-				<div className="d-flex justify-content-between py-3">
+				<div className="d-flex flex-wrap justify-content-between py-3">
 					<MusicianCard />
 					<MusicianCard />
 					<MusicianCard />

@@ -5,7 +5,9 @@ import { Link } from "react-router-dom";
 
 export default function MusicianCardExplore(props) {
 	return (
-		<div className={`${styles.musician} p-0 d-flex flex-column rounded shadow`}>
+		<div
+			className={`${styles.musician} p-0 mb-3 mb-md-0 d-flex flex-column rounded shadow`}
+		>
 			<img
 				src={profile}
 				alt="musician"

@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import styles from "./CategoryDropdown.module.css";
 
 export default function CategoryDropdown() {
+	const ref = useRef();
 	const [open, setOpen] = useState(false);
 
 	const categories = {
@@ -13,6 +14,18 @@ export default function CategoryDropdown() {
 		5: "piano",
 		6: "strings",
 	};
+
+	useEffect(() => {
+		const handleClick = (e) => {
+			if (open && ref.current && !ref.current.contains(e.target)) {
+				setOpen(false);
+			}
+		};
+		document.addEventListener("click", handleClick);
+		return () => {
+			document.removeEventListener("click", handleClick);
+		};
+	}, [open]);
 
 	const [checked, setChecked] = useState(
 		new Array(Object.keys(categories).length).fill(false)
@@ -39,7 +52,7 @@ export default function CategoryDropdown() {
 	return (
 		<div>
 			<button
-				className="btn btn-secondary dropdown-toggle ms-3 bg-white text-black h-100"
+				className="btn btn-secondary dropdown-toggle ms-md-3 bg-white text-black h-100"
 				style={{ border: "1px solid #8F8D8D" }}
 				type="button"
 				onClick={() => onClick()}
@@ -48,8 +61,9 @@ export default function CategoryDropdown() {
 			</button>
 			{open && (
 				<div
-					className="position-absolute bg-white rounded ms-3"
-					style={{ border: "1px solid #8F8D8D", width: "20%" }}
+					className="position-absolute bg-white rounded ms-md-3"
+					style={{ border: "1px solid #8F8D8D", width: "300px" }}
+					ref={ref}
 				>
 					<div className="row p-2 px-3">
 						<div className="col">

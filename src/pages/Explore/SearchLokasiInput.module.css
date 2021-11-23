@@ -13,5 +13,11 @@
 
 .searchbar {
 	border: 1px solid #8f8d8d;
-	width: fit-content;
+	width: 100%;
+}
+
+@media (min-width: 768px) {
+	.searchbar {
+		width: fit-content;
+	}
 }
