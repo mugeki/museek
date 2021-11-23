@@ -15,15 +15,19 @@ export default function NavbarGuest() {
 	};
 
 	const onOpenJoin = () => {
-		console.log("openJoin dalam fungsi 1", openJoin);
 		setOpenLogin(false);
 		setOpenJoin(true);
-		console.log("openJoin dalam fungsi 2", openJoin);
+	};
+
+	const handleLoginModal = (value) => {
+		setOpenLogin(value);
+	};
+
+	const handleJoinModal = (value) => {
+		setOpenJoin(value);
 	};
 
 	useEffect(() => {
-		console.log("openLogin: ", openLogin);
-		console.log("openJoin: ", openJoin);
 		const handleClick = (e) => {
 			if (openLogin && ref.current && !ref.current.contains(e.target)) {
 				setOpenLogin(false);
@@ -82,8 +86,12 @@ export default function NavbarGuest() {
 					</div>
 				</div>
 			</nav>
-			{openLogin && <Login openJoin={onOpenJoin} ref={ref} />}
-			{openJoin && <Register openLogin={onOpenLogin} ref={ref} />}
+			{openLogin && (
+				<Login openJoin={onOpenJoin} ref={ref} onClick={handleLoginModal} />
+			)}
+			{openJoin && (
+				<Register openLogin={onOpenLogin} ref={ref} onClick={handleJoinModal} />
+			)}
 		</div>
 	);
 }
