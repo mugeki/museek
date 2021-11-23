@@ -19,6 +19,14 @@ export default function NavbarGuest() {
 		setOpenJoin(true);
 	};
 
+	const handleLoginModal = (value) => {
+		setOpenLogin(value);
+	};
+
+	const handleJoinModal = (value) => {
+		setOpenJoin(value);
+	};
+
 	useEffect(() => {
 		const handleClick = (e) => {
 			if (openLogin && ref.current && !ref.current.contains(e.target)) {
@@ -36,12 +44,12 @@ export default function NavbarGuest() {
 
 	return (
 		<div>
-			<nav className="navbar navbar-expand-lg navbar-light bg-light">
+			<nav className="navbar navbar-expand-lg navbar-light bg-white">
 				<div className="container-fluid px-4">
 					<Link
 						className="navbar-brand fw-bold"
 						style={{ color: "#F2AF02" }}
-						to=""
+						to="/"
 					>
 						MUSEEK
 					</Link>
@@ -58,25 +66,32 @@ export default function NavbarGuest() {
 					</button>
 					<div className="collapse navbar-collapse" id="navbarNavAltMarkup">
 						<div className="navbar-nav ms-auto">
-							<Link className="nav-link mx-2" to="">
+							<Link className="nav-link mx-2" to="/explore" replace>
 								Explore
 							</Link>
-							<Link className="nav-link mx-2" onClick={onOpenLogin} to="">
+							<button
+								className="nav-link mx-2 bg-white border-0"
+								style={{ width: "fit-content" }}
+								onClick={onOpenLogin}
+							>
 								Sign In
-							</Link>
-							<Link
-								className={`nav-link rounded mx-2 px-4 ${styles.button}`}
+							</button>
+							<button
+								className={`nav-link rounded mx-2 px-4 bg-white ${styles.button}`}
 								onClick={onOpenJoin}
-								to=""
 							>
 								Join
-							</Link>
+							</button>
 						</div>
 					</div>
 				</div>
 			</nav>
-			{openLogin && <Login openJoin={onOpenJoin} ref={ref} />}
-			{openJoin && <Register openLogin={onOpenLogin} ref={ref} />}
+			{openLogin && (
+				<Login openJoin={onOpenJoin} ref={ref} onClick={handleLoginModal} />
+			)}
+			{openJoin && (
+				<Register openLogin={onOpenLogin} ref={ref} onClick={handleJoinModal} />
+			)}
 		</div>
 	);
 }

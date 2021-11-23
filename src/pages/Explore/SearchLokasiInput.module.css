@@ -1,6 +1,6 @@
 .input {
 	border: 0;
-	width: fit-content;
+	width: 250px;
 }
 
 .input:focus {
@@ -11,18 +11,13 @@
 	color: #8f8d8d;
 }
 
-.button {
-	background-color: #f2af02;
-	height: 100%;
-	width: 100px;
-}
-
 .searchbar {
-	width: fit-content;
+	border: 1px solid #8f8d8d;
+	width: 100%;
 }
 
 @media (min-width: 768px) {
-	.input {
-		width: 350px;
+	.searchbar {
+		width: fit-content;
 	}
 }
