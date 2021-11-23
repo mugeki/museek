@@ -1,13 +1,26 @@
-import { forwardRef } from "react";
+import { forwardRef, useState } from "react";
+import { Icon } from "@iconify/react";
 import styles from "./Register.module.css";
 
 const Register = forwardRef((props, ref) => {
+	// const [open, setOpen] = useState(props.open);
+	// const onClick = () => {
+	// 	setOpen(false);
+	// };
+	// console.log(open);
 	return (
 		<div className={`${styles.background} modal d-flex justify-content-center`}>
 			<div
 				className={`${styles.container} bg-white my-auto pb-2 rounded`}
 				ref={ref}
 			>
+				{/* <Icon
+					icon="ant-design:close-circle-outlined"
+					color="#8f8d8d"
+					width="24"
+					className="d-block ms-auto m-2"
+					style={{ cursor: "pointer" }}
+				/> */}
 				<h2 className="fw-bold text-center p-5 pb-4">Join to Museek</h2>
 				<div className="px-4 px-md-5">
 					<input

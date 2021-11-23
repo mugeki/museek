@@ -15,11 +15,15 @@ export default function NavbarGuest() {
 	};
 
 	const onOpenJoin = () => {
+		console.log("openJoin dalam fungsi 1", openJoin);
 		setOpenLogin(false);
 		setOpenJoin(true);
+		console.log("openJoin dalam fungsi 2", openJoin);
 	};
 
 	useEffect(() => {
+		console.log("openLogin: ", openLogin);
+		console.log("openJoin: ", openJoin);
 		const handleClick = (e) => {
 			if (openLogin && ref.current && !ref.current.contains(e.target)) {
 				setOpenLogin(false);
