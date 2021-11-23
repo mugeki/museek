@@ -9,18 +9,18 @@ export default function Detail() {
 	return (
 		<div>
 			<NavbarGuest />
-			<div className="container d-flex justify-content-between py-4">
+			<div className="container d-flex flex-column flex-md-row justify-content-between py-4">
 				<div className="d-flex flex-column">
-					<div className="d-flex">
+					<div className="d-flex flex-column flex-md-row">
 						<img
 							src={profile}
 							alt="musician"
 							className={`${styles.profile} rounded`}
 						/>
-						<div className="ms-4">
+						<div className="ms-md-4 mt-4 mt-md-0">
 							<h2 className="fw-bolder mb-1">Nama Musisi</h2>
 							<h5>Saxophone</h5>
-							<div className="d-flex">
+							<div className="d-flex my-2">
 								<Icon
 									icon="ant-design:heart-outlined"
 									color="#ea2323"
@@ -41,6 +41,31 @@ export default function Detail() {
 									rutrum. Eget nec ligula sem aliquam pellentesque id.
 								</p>
 							</div>
+							<div className={`d-md-none p-md-4 rounded ms-md-4 mt-5`}>
+								<h5 className="fw-bolder mb-4">Kontak</h5>
+								<div className="d-flex">
+									<Icon
+										icon="akar-icons:whatsapp-fill"
+										color="#8f8d8d"
+										width="20"
+										height="20"
+									/>
+									<p className="ms-2" style={{ color: "#8F8D8D" }}>
+										08123456789
+									</p>
+								</div>
+								<div className="d-flex">
+									<Icon
+										icon="carbon:email"
+										color="#8f8d8d"
+										width="20"
+										height="20"
+									/>
+									<p className="ms-2" style={{ color: "#8F8D8D" }}>
+										example@gmail.com
+									</p>
+								</div>
+							</div>
 						</div>
 					</div>
 					<div className="py-5">
@@ -48,9 +73,14 @@ export default function Detail() {
 						<Comment />
 						<Comment />
 						<Comment />
+						<Comment />
+						<Comment />
+						<Comment />
 					</div>
 				</div>
-				<div className={`p-4 rounded ms-4 ${styles.sticky}`}>
+				<div
+					className={`d-none d-md-block p-md-4 rounded ms-md-4 mt-3 mt-md-0 ${styles.sticky}`}
+				>
 					<h5 className="fw-bolder mb-4">Kontak</h5>
 					<div className="d-flex">
 						<Icon

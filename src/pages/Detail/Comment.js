@@ -13,7 +13,7 @@ export default function Comment() {
 				height="50"
 				style={{ cursor: "pointer" }}
 			/>
-			<div className="d-flex flex-column flex-fill ms-4 w-75">
+			<div className="d-flex flex-column flex-fill ms-1 ms-md-4 w-75">
 				<h6 className="fw-bolder">namauser</h6>
 				<p>
 					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cum sit leo
