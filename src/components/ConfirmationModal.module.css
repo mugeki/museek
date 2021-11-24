@@ -1,0 +1,26 @@
+.background {
+	background-color: rgba(0, 0, 0, 0.25);
+	height: 100vh;
+	width: 100vw;
+	z-index: 3;
+}
+
+.button1 {
+	background-color: #f2af02;
+	border: 0;
+	color: white;
+	height: 100%;
+	width: fit-content;
+}
+
+.button2 {
+	background-color: white;
+	border: 1px solid #f2af02;
+	color: #f2af02;
+	height: 100%;
+	width: fit-content;
+}
+
+.container {
+	width: 350px;
+}
