@@ -30,7 +30,7 @@ export default function Profile() {
 								style={{ borderBottom: "1px solid #C4C4C4" }}
 							>
 								<input
-									className="border-0 bg-white fs-6"
+									className="border-0 bg-white fs-6 w-100"
 									type="text"
 									value="John Doe"
 									disabled
@@ -51,7 +51,7 @@ export default function Profile() {
 								style={{ borderBottom: "1px solid #C4C4C4" }}
 							>
 								<input
-									className="border-0 bg-white fs-6"
+									className="border-0 bg-white fs-6 w-100"
 									type="text"
 									value="Bandung, Jawa Barat"
 									disabled
@@ -72,7 +72,7 @@ export default function Profile() {
 								style={{ borderBottom: "1px solid #C4C4C4" }}
 							>
 								<select
-									className="border-0 bg-white fs-6"
+									className="border-0 bg-white fs-6 w-100"
 									style={{ appearance: "none" }}
 									disabled
 								>
@@ -101,7 +101,7 @@ export default function Profile() {
 								style={{ borderBottom: "1px solid #C4C4C4" }}
 							>
 								<input
-									className="border-0 bg-white fs-6"
+									className="border-0 bg-white fs-6 w-100"
 									type="number"
 									value="08123456789"
 									disabled
@@ -122,7 +122,7 @@ export default function Profile() {
 								style={{ borderBottom: "1px solid #C4C4C4" }}
 							>
 								<input
-									className="border-0 bg-white fs-6"
+									className="border-0 bg-white fs-6 w-100"
 									type="email"
 									value="example@gmail.com"
 									disabled
@@ -143,7 +143,7 @@ export default function Profile() {
 								style={{ borderBottom: "1px solid #C4C4C4" }}
 							>
 								<input
-									className="border-0 bg-white fs-6"
+									className="border-0 bg-white fs-6 w-100"
 									type="textarea"
 									value="lorem loremloremloremloremloremloremloremloremloremlorem lorem loremlorem lorem lorem"
 									disabled
@@ -171,9 +171,17 @@ export default function Profile() {
 					>
 						Publish Profile
 					</button>
+					<button
+						className={`${styles.button1} rounded p-2 px-3 d-none`}
+						onClick={() => {
+							handleConfirmation({ type: "publish", status: true });
+						}}
+					>
+						Publish Profile
+					</button>
 				</div>
 			</div>
-			{openModal && (
+			{openModal.status && (
 				<ConfirmationModal onClick={handleConfirmation} type={openModal.type} />
 			)}
 		</div>
