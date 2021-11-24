@@ -20,7 +20,7 @@ export default function Home() {
 				</div>
 			</div>
 			<div className="container my-5">
-				<h1 className="fw-bold">Musisi popular</h1>
+				<h2 className="fw-bold">Musisi popular</h2>
 				<div className="d-flex flex-wrap justify-content-between py-3">
 					<MusicianCard />
 					<MusicianCard />
@@ -29,7 +29,7 @@ export default function Home() {
 				</div>
 			</div>
 			<div className="container my-5">
-				<h1 className="fw-bold">Musisi terbaru</h1>
+				<h2 className="fw-bold">Musisi terbaru</h2>
 				<div className="d-flex flex-wrap justify-content-between py-3">
 					<MusicianCard />
 					<MusicianCard />
