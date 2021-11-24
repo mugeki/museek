@@ -172,12 +172,12 @@ export default function Profile() {
 						Publish Profile
 					</button>
 					<button
-						className={`${styles.button1} rounded p-2 px-3 d-none`}
+						className={`${styles.button2} rounded p-2 px-3 d-none`}
 						onClick={() => {
 							handleConfirmation({ type: "publish", status: true });
 						}}
 					>
-						Publish Profile
+						Unpublish Profile
 					</button>
 				</div>
 			</div>
