@@ -1,6 +1,7 @@
 .musician {
 	height: 300px;
 	width: 100%;
+	cursor: pointer;
 }
 
 .overlay {

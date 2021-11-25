@@ -1,11 +1,26 @@
+import { useParams } from "react-router-dom";
+import { Icon } from "@iconify/react";
 import Navbar from "../../components/Navbar";
 import NavbarGuest from "../../components/NavbarGuest";
 import Comment from "./Comment";
-import { Icon } from "@iconify/react";
-import profile from "../../daniel-angele-2gu4hKuFhi0-unsplash.jpg";
+import ErrorNotFound from "../../components/ErrorNotFound";
+import Loading from "../../components/Loading";
+import useGetMusicianDetailByID from "../../hooks/useGetMusicianDetailByID ";
 import styles from "./Detail.module.css";
 
 export default function Detail() {
+	const { id } = useParams();
+	const { dataDetail, loadingDetail, errorDetail } =
+		useGetMusicianDetailByID(id);
+	if (loadingDetail)
+		return (
+			<div className="position-absolute top-50 start-50 translate-middle">
+				<Loading />
+			</div>
+		);
+	console.log(dataDetail);
+	if (errorDetail || dataDetail.user.length === 0) return <ErrorNotFound />;
+
 	return (
 		<div>
 			<NavbarGuest />
@@ -13,13 +28,13 @@ export default function Detail() {
 				<div className="d-flex flex-column">
 					<div className="d-flex flex-column flex-md-row">
 						<img
-							src={profile}
+							src={dataDetail.user[0].img_link}
 							alt="musician"
 							className={`${styles.profile} rounded`}
 						/>
 						<div className="ms-md-4 mt-4 mt-md-0">
-							<h2 className="fw-bolder mb-1">Nama Musisi</h2>
-							<h5>Saxophone</h5>
+							<h2 className="fw-bolder mb-1">{dataDetail.user[0].fullname}</h2>
+							<h5>{dataDetail.user[0].instrument}</h5>
 							<div className="d-flex my-2">
 								<Icon
 									icon="ant-design:heart-outlined"
@@ -28,18 +43,12 @@ export default function Detail() {
 									height="24"
 									style={{ cursor: "pointer" }}
 								/>
-								<p className="ms-1 my-0">123</p>
+								<p className="ms-1 my-0">{dataDetail.user[0].likes}</p>
 							</div>
-							<p style={{ color: "#8F8D8D" }}>Bandung, Jawa Barat</p>
+							<p style={{ color: "#8F8D8D" }}>{dataDetail.user[0].location}</p>
 							<div>
 								<h5 className="fw-bolder mt-5">Tentang</h5>
-								<p>
-									Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cum
-									sit leo ipsum, odio at. Amet tellus pellentesque ipsum
-									senectus. Morbi orci, eleifend facilisis sit. In platea
-									aliquet hendrerit ipsum convallis gravida egestas integer
-									rutrum. Eget nec ligula sem aliquam pellentesque id.
-								</p>
+								<p>{dataDetail.user[0].about}</p>
 							</div>
 							<div className={`d-md-none p-md-4 rounded ms-md-4 mt-5`}>
 								<h5 className="fw-bolder mb-4">Kontak</h5>
@@ -51,7 +60,7 @@ export default function Detail() {
 										height="20"
 									/>
 									<p className="ms-2" style={{ color: "#8F8D8D" }}>
-										08123456789
+										{dataDetail.user[0].email}
 									</p>
 								</div>
 								<div className="d-flex">
@@ -62,7 +71,7 @@ export default function Detail() {
 										height="20"
 									/>
 									<p className="ms-2" style={{ color: "#8F8D8D" }}>
-										example@gmail.com
+										{dataDetail.user[0].phone}
 									</p>
 								</div>
 							</div>
@@ -90,13 +99,13 @@ export default function Detail() {
 							height="20"
 						/>
 						<p className="ms-2" style={{ color: "#8F8D8D" }}>
-							08123456789
+							{dataDetail.user[0].email}
 						</p>
 					</div>
 					<div className="d-flex">
 						<Icon icon="carbon:email" color="#8f8d8d" width="20" height="20" />
 						<p className="ms-2" style={{ color: "#8F8D8D" }}>
-							example@gmail.com
+							{dataDetail.user[0].phone}
 						</p>
 					</div>
 				</div>

@@ -4,9 +4,11 @@ import MusicianCardExplore from "./MusicianCardExplore";
 import SearchLokasiInput from "./SearchLokasiInput";
 import CategoryDropdown from "./CategoryDropdown";
 import SortDropdown from "./SortDropdown";
+import useGetNewestMusicianList from "../../hooks/useGetNewestMusicianList";
 // import styles from "./Home.module.css";
 
 export default function Explore() {
+	const { dataNewest, loadingNewest, errorNewest } = useGetNewestMusicianList();
 	return (
 		<div className="pb-3">
 			<NavbarGuest />
