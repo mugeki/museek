@@ -21,7 +21,7 @@ export default function SortDropdown(props) {
 		if (value === "newest") {
 			props.onClick({ date_published: "desc", likes: undefined });
 		} else {
-			props.onClick({ date_published: undefined, likes: "asc" });
+			props.onClick({ date_published: undefined, likes: "desc" });
 		}
 	};
 

@@ -39,6 +39,8 @@ export default function Explore() {
 	if (errorFilter) console.log(errorFilter);
 	if (!loadingFilter) dispatch(deleteLocation());
 
+	console.log("filter", filter);
+
 	return (
 		<div className="pb-3">
 			{!isLoggedIn ? <NavbarGuest /> : <Navbar />}

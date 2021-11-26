@@ -80,8 +80,8 @@ const GetMusicianDetailByID = gql`
 
 const GetMusicianByFilter = gql`
 	query MyQuery(
-		$date_published: order_by = asc
-		$likes: order_by = asc
+		$date_published: order_by
+		$likes: order_by
 		$location: String
 		$instrument: [String!]
 		$offset: Int
