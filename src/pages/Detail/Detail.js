@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react";
 import Navbar from "../../components/Navbar";
 import NavbarGuest from "../../components/NavbarGuest";
 import Comment from "./Comment";
-import ErrorNotFound from "../../components/ErrorNotFound";
+import Error from "../../components/Error";
 import Loading from "../../components/Loading";
 import useGetMusicianDetailByID from "../../hooks/useGetMusicianDetailByID ";
 import styles from "./Detail.module.css";
@@ -21,7 +21,7 @@ export default function Detail() {
 			</div>
 		);
 	console.log(dataDetail);
-	if (errorDetail || dataDetail.user.length === 0) return <ErrorNotFound />;
+	if (errorDetail || dataDetail.user.length === 0) return <Error />;
 
 	return (
 		<div>

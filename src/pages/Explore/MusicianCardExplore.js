@@ -1,8 +1,5 @@
-import { getStorage, ref, getDownloadURL } from "firebase/storage";
-import app from "../../firebase/firebase";
 import { Icon } from "@iconify/react";
 import styles from "./MusicianCardExplore.module.css";
-// import profile from "../../daniel-angele-2gu4hKuFhi0-unsplash.jpg";
 import { Link } from "react-router-dom";
 
 export default function MusicianCardExplore(props) {

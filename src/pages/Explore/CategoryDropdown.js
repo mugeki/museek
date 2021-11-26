@@ -32,7 +32,9 @@ export default function CategoryDropdown(props) {
 	);
 
 	const onChange = (idx) => {
-		const updatedChecked = checked.map((item, i) => (i == idx ? !item : item));
+		const updatedChecked = checked.map((item, i) =>
+			i === parseInt(idx) ? !item : item
+		);
 		setChecked(updatedChecked);
 	};
 

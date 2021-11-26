@@ -1,13 +1,15 @@
 import { Icon } from "@iconify/react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../store/loginSlice";
 
 export default function Navbar() {
 	const id = useSelector((state) => state.auth.userId);
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const onClick = () => {
 		dispatch(logout());
+		navigate("/");
 	};
 	return (
 		<nav className="navbar navbar-expand-lg navbar-light bg-white">

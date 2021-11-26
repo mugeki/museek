@@ -1,5 +1,4 @@
 import React from "react";
-import { Waypoint } from "react-waypoint";
 import MusicianCardExplore from "./MusicianCardExplore";
 
 export default function MusicianList(props) {

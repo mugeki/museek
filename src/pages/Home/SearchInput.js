@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { passLocation } from "../../store/locationSlice";
 import styles from "./SearchInput.module.css";
 

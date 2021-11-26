@@ -2,7 +2,7 @@ import { forwardRef, useEffect, useState } from "react";
 import styles from "./Login.module.css";
 import useGetUsernameAndPassword from "../hooks/useGetUsernameAndPassword";
 import LoadingSmall from "./LoadingSmall";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../store/loginSlice";
 

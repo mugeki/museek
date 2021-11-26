@@ -7,24 +7,27 @@ import styles from "./Profile.module.css";
 import { useSelector } from "react-redux";
 import useGetUserProfile from "../../hooks/useGetUserProfile";
 import Loading from "../../components/Loading";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router-dom";
+import Error from "../../components/Error";
 
 export default function Profile() {
 	const navigate = useNavigate();
 	const isLoggedIn = useSelector((state) => state.auth.login);
-	const id = useSelector((state) => state.auth.userId);
+	const userId = useSelector((state) => state.auth.userId);
+	const { id } = useParams();
 
 	const [openModal, setOpenModal] = useState({ type: "", status: false });
 
-	const { dataProfile, loadingProfile, errorProfile } = useGetUserProfile(id);
+	const { dataProfile, loadingProfile, errorProfile } =
+		useGetUserProfile(userId);
 
 	if (errorProfile) console.log(errorProfile);
-
-	if (!loadingProfile && dataProfile) console.log(dataProfile);
 
 	const handleConfirmation = (value) => {
 		setOpenModal(value);
 	};
+	if (userId === -1 || userId !== parseInt(id))
+		return <Error code={401} message={"Unauthorized"} />;
 	return (
 		<div>
 			{!isLoggedIn ? <NavbarGuest /> : <Navbar />}
@@ -182,7 +185,7 @@ export default function Profile() {
 							<button
 								className={`${styles.buttonDisabled} rounded p-2 px-3 me-3`}
 								onClick={() => {
-									navigate(`/detail/${id}`);
+									navigate(`/detail/${userId}`);
 								}}
 							>
 								View Page

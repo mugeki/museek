@@ -39,3 +39,5 @@ const UpdateUser = gql`
 		}
 	}
 `;
+
+export { RegisterUser, UpdateUser };

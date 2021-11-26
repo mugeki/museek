@@ -5,7 +5,7 @@ import CategoryDropdown from "./CategoryDropdown";
 import SortDropdown from "./SortDropdown";
 import useGetMusicianByFilter from "../../hooks/useGetMusicianByFilter";
 import Loading from "../../components/Loading";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import MusicianList from "./MusicianList";
 import { deleteLocation } from "../../store/locationSlice";
