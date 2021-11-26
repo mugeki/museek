@@ -7,8 +7,10 @@ import ErrorNotFound from "../../components/ErrorNotFound";
 import Loading from "../../components/Loading";
 import useGetMusicianDetailByID from "../../hooks/useGetMusicianDetailByID ";
 import styles from "./Detail.module.css";
+import { useSelector } from "react-redux";
 
 export default function Detail() {
+	const isLoggedIn = useSelector((state) => state.auth.login);
 	const { id } = useParams();
 	const { dataDetail, loadingDetail, errorDetail } =
 		useGetMusicianDetailByID(id);
@@ -23,7 +25,7 @@ export default function Detail() {
 
 	return (
 		<div>
-			<NavbarGuest />
+			{!isLoggedIn ? <NavbarGuest /> : <Navbar />}
 			<div className="container d-flex flex-column flex-md-row justify-content-between py-4">
 				<div className="d-flex flex-column">
 					<div className="d-flex flex-column flex-md-row">

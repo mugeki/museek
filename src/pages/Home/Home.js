@@ -6,8 +6,10 @@ import useGetNewestMusicianList from "../../hooks/useGetNewestMusicianList";
 import useGetPopularMusicianList from "../../hooks/useGetPopularMusicianList";
 import styles from "./Home.module.css";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 export default function Home() {
+	const isLoggedIn = useSelector((state) => state.auth.login);
 	const [newestMusician, setNewestMusician] = useState([]);
 	const [popularMusician, setPopularMusician] = useState([]);
 	const { dataNewest, loadingNewest, errorNewest } = useGetNewestMusicianList();
@@ -26,7 +28,7 @@ export default function Home() {
 
 	return (
 		<div className="pb-3">
-			<NavbarGuest />
+			{!isLoggedIn ? <NavbarGuest /> : <Navbar />}
 			<div className={styles.hero}>
 				<div className={`${styles.overlay} p-2 p-md-5`}>
 					<div className="container mt-4">

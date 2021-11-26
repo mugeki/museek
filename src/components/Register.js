@@ -1,9 +1,22 @@
-import { forwardRef } from "react";
+import { forwardRef, useState } from "react";
 import styles from "./Register.module.css";
 
 const Register = forwardRef((props, ref) => {
+	const [form, setForm] = useState({
+		username: "",
+		email: "",
+		password: "",
+		fullName: "",
+		phone: "",
+	});
+	const onChange = (e) => {
+		const name = e.target.name;
+		const value = e.target.value;
+		setForm({ ...form, [name]: value });
+	};
 	const onClick = (e) => {
-		props.onClick(e.target.value);
+		const value = e.target.value;
+		props.onClick(value);
 	};
 	return (
 		<div className={`${styles.background} modal d-flex justify-content-center`}>
@@ -32,38 +45,54 @@ const Register = forwardRef((props, ref) => {
 					/>
 				</svg>
 				<h2 className="fw-bold text-center p-5 pb-4">Join to Museek</h2>
-				<div className="px-4 px-md-5">
+				<form className="px-4 px-md-5">
 					<input
 						className={`${styles.input} form-control px-3 py-2 mb-4`}
+						value={form.username}
+						name="username"
 						placeholder="Username"
+						onChange={onChange}
 						type="text"
 					/>
 					<input
 						className={`${styles.input} form-control px-3 py-2 mb-4`}
+						value={form.email}
+						name="email"
 						placeholder="Email"
+						onChange={onChange}
 						type="email"
 					/>
 					<input
 						className={`${styles.input} form-control px-3 py-2 mb-4`}
+						value={form.password}
+						name="password"
 						placeholder="Password"
+						onChange={onChange}
 						type="password"
 					/>
 					<input
 						className={`${styles.input} form-control px-3 py-2 mb-4`}
+						value={form.fullName}
+						name="fullName"
 						placeholder="Nama Lengkap"
+						onChange={onChange}
 						type="text"
 					/>
 					<input
 						className={`${styles.input} form-control px-3 py-2 mb-4`}
+						value={form.phone}
+						name="phone"
 						placeholder="No. Handphone"
+						onChange={onChange}
 						type="number"
 					/>
 					<button
 						className={`border-0 fw-bolder text-white ${styles.button} rounded p-2 w-100`}
+						onSubmit
 					>
 						Join
 					</button>
-				</div>
+				</form>
 				<div
 					className="text-center pt-4 mt-5"
 					style={{ borderTop: "1px solid #8f8d8d" }}

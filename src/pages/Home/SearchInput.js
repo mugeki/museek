@@ -12,6 +12,10 @@ export default function SearchInput() {
 	const onChange = (e) => {
 		setLocation(e.target.value);
 	};
+	const onClick = () => {
+		dispatch(passLocation(location));
+		navigate("/explore");
+	};
 	return (
 		<div className={`bg-white ps-2 rounded ${styles.searchbar}`}>
 			<Icon icon="ant-design:search-outlined" color="#8f8d8d" />
@@ -24,10 +28,7 @@ export default function SearchInput() {
 			/>
 			<button
 				className={`border-0 text-white ${styles.button} rounded-end p-2`}
-				onClick={() => {
-					dispatch(passLocation(location));
-					navigate("/explore");
-				}}
+				onClick={onClick}
 			>
 				Cari
 			</button>

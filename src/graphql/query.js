@@ -1,5 +1,35 @@
 import { gql } from "@apollo/client";
 
+const GetUsernameAndPassword = gql`
+	query MyQuery($username: String, $password: String) {
+		user(
+			where: {
+				_and: { username: { _eq: $username }, password: { _eq: $password } }
+			}
+		) {
+			id
+			username
+			password
+		}
+	}
+`;
+
+const GetUserProfile = gql`
+	query MyQuery($id: Int!) {
+		user_by_pk(id: $id) {
+			id
+			about
+			email
+			full_name
+			img_link
+			instrument
+			location
+			password
+			phone
+		}
+	}
+`;
+
 const GetPopularMusicianList = gql`
 	query MyQuery {
 		user(
@@ -79,6 +109,8 @@ const GetMusicianByFilter = gql`
 `;
 
 export {
+	GetUsernameAndPassword,
+	GetUserProfile,
 	GetPopularMusicianList,
 	GetNewestMusicianList,
 	GetMusicianDetailByID,

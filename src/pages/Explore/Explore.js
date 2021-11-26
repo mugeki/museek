@@ -11,6 +11,7 @@ import MusicianList from "./MusicianList";
 import { deleteLocation } from "../../store/locationSlice";
 
 export default function Explore() {
+	const isLoggedIn = useSelector((state) => state.auth.login);
 	const location = useSelector((state) => state.location.location);
 	const dispatch = useDispatch();
 
@@ -40,7 +41,7 @@ export default function Explore() {
 
 	return (
 		<div className="pb-3">
-			<NavbarGuest />
+			{!isLoggedIn ? <NavbarGuest /> : <Navbar />}
 			<div className="container mt-4">
 				<h1 className="fw-bold">Cari musisi</h1>
 			</div>

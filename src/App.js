@@ -24,7 +24,7 @@ function App() {
 									<Route path="/" exact element={<Home />} />
 									<Route path="/explore" exact element={<Explore />} />
 									<Route path="/musician/:id" exact element={<Detail />} />
-									<Route path="/profile" exact element={<Profile />} />
+									<Route path="/profile/:id" exact element={<Profile />} />
 									<Route path="*" element={<ErrorNotFound />} />
 								</Routes>
 							</BrowserRouter>

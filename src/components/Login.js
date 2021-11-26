@@ -1,10 +1,51 @@
-import { forwardRef } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import styles from "./Login.module.css";
+import useGetUsernameAndPassword from "../hooks/useGetUsernameAndPassword";
+import LoadingSmall from "./LoadingSmall";
+import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { login } from "../store/loginSlice";
 
 const Login = forwardRef((props, ref) => {
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const { getUsernameAndPassword, data, loading, error } =
+		useGetUsernameAndPassword();
+	const [form, setForm] = useState({
+		username: "",
+		password: "",
+	});
+	const [errorMsg, setErrorMsg] = useState("");
+	const onChange = (e) => {
+		const name = e.target.name;
+		const value = e.target.value;
+		setForm({ ...form, [name]: value });
+	};
 	const onClick = (e) => {
 		props.onClick(e.target.value);
 	};
+
+	const onSubmit = (e) => {
+		e.preventDefault();
+		getUsernameAndPassword({ variables: form });
+		if (error) {
+			console.log(error);
+		}
+	};
+
+	useEffect(() => {
+		if (!loading) {
+			if (data && data.user.length === 0) {
+				setErrorMsg("Username atau password salah");
+			} else if (data && data.user.length !== 0) {
+				setErrorMsg("");
+				const authData = { userId: data.user[0].id, login: true };
+				dispatch(login(authData));
+				navigate(window.location.pathname);
+			}
+		}
+	}, [data, loading, dispatch, navigate]);
+
 	return (
 		<div className={`${styles.background} modal d-flex justify-content-center`}>
 			<div
@@ -32,23 +73,31 @@ const Login = forwardRef((props, ref) => {
 					/>
 				</svg>
 				<h2 className="fw-bold text-center p-5 pb-4">Sign In to Museek</h2>
-				<div className="px-4 px-md-5">
+				<p className="text-center text-danger">{errorMsg}</p>
+				<form className="px-4 px-md-5" onSubmit={onSubmit}>
 					<input
 						className={`${styles.input} form-control px-3 py-2 mb-4`}
+						value={form.username}
+						name="username"
 						placeholder="Username"
+						onChange={onChange}
 						type="text"
 					/>
 					<input
 						className={`${styles.input} form-control px-3 py-2 mb-4`}
+						value={form.password}
+						name="password"
 						placeholder="Password"
+						onChange={onChange}
 						type="password"
 					/>
 					<button
 						className={`border-0 fw-bolder text-white ${styles.button} rounded p-2 w-100`}
+						type="submit"
 					>
-						Sign In
+						{loading ? <LoadingSmall /> : "Sign In"}
 					</button>
-				</div>
+				</form>
 				<div
 					className="text-center pt-4 mt-5"
 					style={{ borderTop: "1px solid #8f8d8d" }}

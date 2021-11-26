@@ -23,6 +23,16 @@
 	color: #8f8d8d;
 }
 
+.input[type="number"] {
+	-moz-appearance: textfield;
+}
+
+.input::-webkit-outer-spin-button,
+.input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
 .join {
 	background-color: white;
 	border: 0;
