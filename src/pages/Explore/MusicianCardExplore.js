@@ -7,25 +7,6 @@ import { Link } from "react-router-dom";
 
 export default function MusicianCardExplore(props) {
 	const { id, profile, fullName, instrument, location, likes } = props;
-	// console.log("profile", profile);
-	// const storage = getStorage(app);
-	// const imagesRef = ref(storage, profile.name);
-	// getDownloadURL(ref(storage, imagesRef))
-	// 	.then((url) => {
-	// 		// `url` is the download URL for 'images/stars.jpg'
-
-	// 		// This can be downloaded directly:
-	// 		const xhr = new XMLHttpRequest();
-	// 		xhr.responseType = "blob";
-	// 		xhr.onload = (event) => {
-	// 			const blob = xhr.response;
-	// 		};
-	// 		xhr.open("GET", url);
-	// 		xhr.send();
-	// 	})
-	// 	.catch((error) => {
-	// 		throw error;
-	// 	});
 	return (
 		<div
 			className={`${styles.musician} p-0 mb-4 me-md-3 me-lg-4 d-flex flex-column rounded shadow`}

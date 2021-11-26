@@ -11,6 +11,7 @@ export default function SearchLokasiInput(props) {
 			<input
 				className={`${styles.input} p-2 rounded`}
 				placeholder="Lokasi"
+				value={props.location}
 				onChange={onChange}
 			/>
 		</div>

@@ -6,12 +6,17 @@ import SortDropdown from "./SortDropdown";
 import useGetMusicianByFilter from "../../hooks/useGetMusicianByFilter";
 import Loading from "../../components/Loading";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import MusicianList from "./MusicianList";
+import { deleteLocation } from "../../store/locationSlice";
 
 export default function Explore() {
+	const location = useSelector((state) => state.location.location);
+	const dispatch = useDispatch();
+
 	const [filter, setFilter] = useState({
 		date_published: "desc",
-		location: "",
+		location: location,
 		instrument: [
 			"Vokal",
 			"Gitar",
@@ -23,6 +28,7 @@ export default function Explore() {
 		],
 		offset: 0,
 	});
+
 	const handleFilter = (value) => {
 		setFilter({ ...filter, ...value });
 	};
@@ -30,11 +36,7 @@ export default function Explore() {
 		useGetMusicianByFilter(filter);
 
 	if (errorFilter) console.log(errorFilter);
-	if (!loadingFilter) console.log(dataFilter);
-
-	useEffect(() => {
-		console.log(filter);
-	}, [filter]);
+	if (!loadingFilter) dispatch(deleteLocation());
 
 	return (
 		<div className="pb-3">
@@ -46,7 +48,7 @@ export default function Explore() {
 				className="container mt-4 d-flex flex-column flex-md-row sticky-top bg-white w-100 py-4"
 				style={{ zIndex: 1 }}
 			>
-				<SearchLokasiInput onChange={handleFilter} />
+				<SearchLokasiInput onChange={handleFilter} location={filter.location} />
 				<div className="d-flex flex-row mt-3 mt-md-0">
 					<CategoryDropdown onClick={handleFilter} />
 					<SortDropdown onClick={handleFilter} />

@@ -15,7 +15,7 @@ export default function MusicianList(props) {
 				<MusicianCardExplore
 					key={item.id}
 					id={item.id}
-					profile={item.profile}
+					profile={item.img_link}
 					fullName={item.full_name}
 					instrument={item.instrument}
 					location={item.location}
