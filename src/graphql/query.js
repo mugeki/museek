@@ -50,51 +50,29 @@ const GetMusicianDetailByID = gql`
 
 const GetMusicianByFilter = gql`
 	query MyQuery(
-		$location: String
-		$instrument: [String!]
 		$date_published: order_by = asc
 		$likes: order_by = asc
+		$location: String
+		$instrument: [String!]
+		$offset: Int
 	) {
 		user(
+			order_by: { date_published: $date_published, likes: $likes }
 			where: {
-				_and: {
-					location: { _like: $location }
+				_or: {
+					location: { _iregex: $location }
 					instrument: { _in: $instrument }
 				}
+				published: { _eq: true }
 			}
-			order_by: { date_published: $date_published, likes: $likes }
+			offset: $offset
+			limit: 4
 		) {
 			id
 			full_name
 			img_link
 			likes
-			instrument
-		}
-	}
-`;
-
-const a = gql`
-	query MyQuery(
-		$location: String
-		$instrument: [String!]
-		$date_published: order_by = asc
-		$likes: order_by = asc
-	) {
-		user(
-			where: {
-				_and: {
-					location: { _like: $location }
-					instrument: { _in: $instrument }
-				}
-				location: { _like: $_like }
-				instrument: { _in: $_in1 }
-			}
-			order_by: { date_published: $date_published, likes: $likes }
-		) {
-			id
-			full_name
-			img_link
-			likes
+			location
 			instrument
 		}
 	}

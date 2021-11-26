@@ -33,7 +33,7 @@ export default function Detail() {
 							className={`${styles.profile} rounded`}
 						/>
 						<div className="ms-md-4 mt-4 mt-md-0">
-							<h2 className="fw-bolder mb-1">{dataDetail.user[0].fullname}</h2>
+							<h2 className="fw-bolder mb-1">{dataDetail.user[0].full_name}</h2>
 							<h5>{dataDetail.user[0].instrument}</h5>
 							<div className="d-flex my-2">
 								<Icon

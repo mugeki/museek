@@ -1,14 +1,41 @@
 import Navbar from "../../components/Navbar";
 import NavbarGuest from "../../components/NavbarGuest";
-import MusicianCardExplore from "./MusicianCardExplore";
 import SearchLokasiInput from "./SearchLokasiInput";
 import CategoryDropdown from "./CategoryDropdown";
 import SortDropdown from "./SortDropdown";
-import useGetNewestMusicianList from "../../hooks/useGetNewestMusicianList";
-// import styles from "./Home.module.css";
+import useGetMusicianByFilter from "../../hooks/useGetMusicianByFilter";
+import Loading from "../../components/Loading";
+import { useEffect, useState } from "react";
+import MusicianList from "./MusicianList";
 
 export default function Explore() {
-	const { dataNewest, loadingNewest, errorNewest } = useGetNewestMusicianList();
+	const [filter, setFilter] = useState({
+		date_published: "desc",
+		location: "",
+		instrument: [
+			"Vokal",
+			"Gitar",
+			"Bass",
+			"Brass",
+			"Perkusi",
+			"Piano",
+			"Strings",
+		],
+		offset: 0,
+	});
+	const handleFilter = (value) => {
+		setFilter({ ...filter, ...value });
+	};
+	const { dataFilter, loadingFilter, errorFilter } =
+		useGetMusicianByFilter(filter);
+
+	if (errorFilter) console.log(errorFilter);
+	if (!loadingFilter) console.log(dataFilter);
+
+	useEffect(() => {
+		console.log(filter);
+	}, [filter]);
+
 	return (
 		<div className="pb-3">
 			<NavbarGuest />
@@ -19,25 +46,24 @@ export default function Explore() {
 				className="container mt-4 d-flex flex-column flex-md-row sticky-top bg-white w-100 py-4"
 				style={{ zIndex: 1 }}
 			>
-				<SearchLokasiInput />
+				<SearchLokasiInput onChange={handleFilter} />
 				<div className="d-flex flex-row mt-3 mt-md-0">
-					<CategoryDropdown />
-					<SortDropdown />
+					<CategoryDropdown onClick={handleFilter} />
+					<SortDropdown onClick={handleFilter} />
 				</div>
 			</div>
 			<div className="container my-3">
-				<div className="d-flex flex-wrap justify-content-between py-3">
-					<MusicianCardExplore />
-					<MusicianCardExplore />
-					<MusicianCardExplore />
-					<MusicianCardExplore />
-				</div>
-				<div className="d-flex flex-wrap justify-content-between py-3">
-					<MusicianCardExplore />
-					<MusicianCardExplore />
-					<MusicianCardExplore />
-					<MusicianCardExplore />
-				</div>
+				{!loadingFilter ? (
+					dataFilter.user.length === 0 ? (
+						<div>
+							<p>Tidak ditemukan hasil yang cocok.</p>
+						</div>
+					) : (
+						<MusicianList entries={dataFilter.user} />
+					)
+				) : (
+					<Loading />
+				)}
 			</div>
 		</div>
 	);
