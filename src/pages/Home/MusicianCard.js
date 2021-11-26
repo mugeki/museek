@@ -11,7 +11,7 @@ export default function MusicianCard(props) {
 			<div
 				className={`${styles.overlay} position-absolute rounded p-4 w-100 h-100`}
 			>
-				<h4 className="text-white">{fullName}</h4>
+				<h4 className="text-white text-truncate">{fullName}</h4>
 				<h5 className="text-white fw-normal">{instrument}</h5>
 			</div>
 			<img

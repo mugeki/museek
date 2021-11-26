@@ -15,14 +15,17 @@ export default function MusicianCardExplore(props) {
 			/>
 			<div className="d-flex flex-column justify-content-between p-4 h-100 rounded-bottom">
 				<div className="d-flex justify-content-between bg-white w-100">
-					<div className="">
-						<h5 className="mb-1">{fullName}</h5>
-						<h6 className="fw-normal">{instrument}</h6>
-						<h6 className="fw-normal" style={{ color: "#8F8D8D" }}>
+					<div className="d-block w-75">
+						<h5 className="mb-1 text-truncate">{fullName}</h5>
+						<h6 className="fw-normal text-truncate">{instrument}</h6>
+						<h6
+							className="fw-normal text-truncate"
+							style={{ color: "#8F8D8D" }}
+						>
 							{location}
 						</h6>
 					</div>
-					<div className="text-center">
+					<div className=" text-center">
 						<Icon icon="ant-design:heart-filled" color="#ea2323" width="31" />
 						<p>
 							{likes > 999
