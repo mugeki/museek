@@ -21,7 +21,8 @@ export default function Detail() {
 			</div>
 		);
 	console.log(dataDetail);
-	if (errorDetail || dataDetail.user.length === 0) return <Error />;
+	if (errorDetail || dataDetail.user.length === 0)
+		return <Error code={404} message={"Not Found"} />;
 
 	return (
 		<div>

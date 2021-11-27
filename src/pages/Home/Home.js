@@ -7,6 +7,7 @@ import useGetPopularMusicianList from "../../hooks/useGetPopularMusicianList";
 import styles from "./Home.module.css";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import Loading from "../../components/Loading";
 
 export default function Home() {
 	const isLoggedIn = useSelector((state) => state.auth.login);
@@ -43,29 +44,37 @@ export default function Home() {
 			<div className="container my-5">
 				<h2 className="fw-bold">Musisi popular</h2>
 				<div className="d-flex flex-wrap justify-content-between py-3">
-					{popularMusician.map((item) => (
-						<MusicianCard
-							key={item.id}
-							id={item.id}
-							profile={item.img_link}
-							fullName={item.full_name}
-							instrument={item.instrument}
-						/>
-					))}
+					{loadingPopular ? (
+						<Loading />
+					) : (
+						popularMusician.map((item) => (
+							<MusicianCard
+								key={item.id}
+								id={item.id}
+								profile={item.img_link}
+								fullName={item.full_name}
+								instrument={item.instrument}
+							/>
+						))
+					)}
 				</div>
 			</div>
 			<div className="container my-5">
 				<h2 className="fw-bold">Musisi terbaru</h2>
 				<div className="d-flex flex-wrap justify-content-between py-3">
-					{newestMusician.map((item) => (
-						<MusicianCard
-							key={item.id}
-							id={item.id}
-							profile={item.img_link}
-							fullName={item.full_name}
-							instrument={item.instrument}
-						/>
-					))}
+					{loadingPopular ? (
+						<Loading />
+					) : (
+						newestMusician.map((item) => (
+							<MusicianCard
+								key={item.id}
+								id={item.id}
+								profile={item.img_link}
+								fullName={item.full_name}
+								instrument={item.instrument}
+							/>
+						))
+					)}
 				</div>
 			</div>
 		</div>

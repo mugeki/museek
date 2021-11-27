@@ -1,14 +1,15 @@
-import { Fragment, useState } from "react";
-import { Icon } from "@iconify/react";
+import { Fragment, useState, useEffect } from "react";
 import Navbar from "../../components/Navbar";
 import NavbarGuest from "../../components/NavbarGuest";
 import ConfirmationModal from "../../components/ConfirmationModal";
 import styles from "./Profile.module.css";
 import { useSelector } from "react-redux";
 import useGetUserProfile from "../../hooks/useGetUserProfile";
+import useUpdateUser from "../../hooks/useUpdateUser";
 import Loading from "../../components/Loading";
 import { useNavigate, useParams } from "react-router-dom";
 import Error from "../../components/Error";
+import useUpdateUserStatus from "../../hooks/useUpdateUserStatus";
 
 export default function Profile() {
 	const navigate = useNavigate();
@@ -16,30 +17,89 @@ export default function Profile() {
 	const userId = useSelector((state) => state.auth.userId);
 	const { id } = useParams();
 
-	const [openModal, setOpenModal] = useState({ type: "", status: false });
+	const [openModal, setOpenModal] = useState(false);
+	const [editField, setEditField] = useState(false);
+	const [form, setForm] = useState({
+		img_link: "",
+		full_name: "",
+		location: "",
+		instrument: "",
+		phone: "",
+		email: "",
+		about: "",
+		published: false,
+	});
 
 	const { dataProfile, loadingProfile, errorProfile } =
 		useGetUserProfile(userId);
+	const { updateUser, loadingUpdate } = useUpdateUser();
+	const { updateUserStatus, loadingUpdateStatus } = useUpdateUserStatus();
 
 	if (errorProfile) console.log(errorProfile);
 
-	const handleConfirmation = (value) => {
-		setOpenModal(value);
+	useEffect(() => {
+		let mounted = true;
+		const onMount = () => {
+			if (
+				!loadingProfile &&
+				!loadingUpdate &&
+				!loadingUpdateStatus &&
+				dataProfile
+			) {
+				setForm({ ...dataProfile.user_by_pk });
+			}
+		};
+		if (mounted) onMount();
+		return () => {
+			mounted = false;
+		};
+	}, [loadingUpdateStatus, loadingUpdate, loadingProfile, dataProfile]);
+
+	const handleModal = (value) => {
+		if (value.hasOwnProperty("published")) {
+			updateUserStatus({ variables: { id: id, ...value } });
+			setOpenModal(false);
+		} else {
+			setOpenModal(value);
+		}
 	};
-	if (userId === -1 || userId !== parseInt(id))
+
+	const onChange = (e) => {
+		const name = e.target.name;
+		const value = e.target.value;
+		setForm({ ...form, [name]: value });
+	};
+
+	const onClickEdit = () => {
+		setEditField(!editField);
+	};
+
+	const onClickSave = () => {
+		updateUser({ variables: { id: id, ...form } });
+		setEditField(!editField);
+	};
+
+	if (userId === -1 || userId !== parseInt(id)) {
 		return <Error code={401} message={"Unauthorized"} />;
+	}
+
 	return (
 		<div>
 			{!isLoggedIn ? <NavbarGuest /> : <Navbar />}
 			<div className="container py-4 ">
 				<h2 className="fw-bolder">Profile Detail</h2>
-				{loadingProfile ? (
-					<Loading />
-				) : !loadingProfile && dataProfile ? (
+				{loadingProfile || loadingUpdate || loadingUpdateStatus ? (
+					<div className="position-absolute top-50 start-50 translate-middle">
+						<Loading />
+					</div>
+				) : !loadingProfile &&
+				  !loadingUpdate &&
+				  !loadingUpdateStatus &&
+				  dataProfile ? (
 					<Fragment>
-						<div className="d-flex flex-column flex-md-row mt-5 justify-content-center">
+						<form className="d-flex flex-column flex-md-row mt-5 justify-content-center">
 							<img
-								src={dataProfile?.user_by_pk.img_link}
+								src={form.img_link}
 								alt="musician"
 								className={`${styles.profile} rounded me-md-4`}
 							/>
@@ -52,16 +112,12 @@ export default function Profile() {
 									>
 										<input
 											className="border-0 bg-white fs-6 w-100"
+											style={{ outline: "none" }}
 											type="text"
-											value={dataProfile?.user_by_pk.full_name}
-											disabled
-										/>
-										<Icon
-											icon="ant-design:edit-filled"
-											color="#c4c4c4"
-											width="16"
-											height="16"
-											style={{ cursor: "pointer" }}
+											name="full_name"
+											value={form.full_name}
+											disabled={!editField}
+											onChange={onChange}
 										/>
 									</div>
 								</label>
@@ -73,16 +129,12 @@ export default function Profile() {
 									>
 										<input
 											className="border-0 bg-white fs-6 w-100"
+											style={{ outline: "none" }}
 											type="text"
-											value={dataProfile?.user_by_pk.location}
-											disabled
-										/>
-										<Icon
-											icon="ant-design:edit-filled"
-											color="#c4c4c4"
-											width="16"
-											height="16"
-											style={{ cursor: "pointer" }}
+											name="location"
+											value={form.location}
+											disabled={!editField}
+											onChange={onChange}
 										/>
 									</div>
 								</label>
@@ -94,9 +146,11 @@ export default function Profile() {
 									>
 										<select
 											className="border-0 bg-white fs-6 w-100"
-											style={{ appearance: "none" }}
-											value={dataProfile?.user_by_pk.instrument}
-											disabled
+											style={{ appearance: "none", outline: "none" }}
+											name="instrument"
+											value={form.instrument}
+											disabled={!editField}
+											onChange={onChange}
 										>
 											<option value="-">-</option>
 											<option value="Vokal">Vokal</option>
@@ -107,13 +161,6 @@ export default function Profile() {
 											<option value="Piano">Piano</option>
 											<option value="Strings">Strings</option>
 										</select>
-										<Icon
-											icon="ant-design:edit-filled"
-											color="#c4c4c4"
-											width="16"
-											height="16"
-											style={{ cursor: "pointer" }}
-										/>
 									</div>
 								</label>
 								<label className="fw-bolder fs-5">
@@ -124,16 +171,12 @@ export default function Profile() {
 									>
 										<input
 											className="border-0 bg-white fs-6 w-100"
+											style={{ outline: "none" }}
 											type="number"
-											value={dataProfile?.user_by_pk.phone}
-											disabled
-										/>
-										<Icon
-											icon="ant-design:edit-filled"
-											color="#c4c4c4"
-											width="16"
-											height="16"
-											style={{ cursor: "pointer" }}
+											name="phone"
+											value={form.phone}
+											disabled={!editField}
+											onChange={onChange}
 										/>
 									</div>
 								</label>
@@ -145,16 +188,12 @@ export default function Profile() {
 									>
 										<input
 											className="border-0 bg-white fs-6 w-100"
+											style={{ outline: "none" }}
 											type="email"
-											value={dataProfile?.user_by_pk.email}
-											disabled
-										/>
-										<Icon
-											icon="ant-design:edit-filled"
-											color="#c4c4c4"
-											width="16"
-											height="16"
-											style={{ cursor: "pointer" }}
+											name="email"
+											value={form.email}
+											disabled={!editField}
+											onChange={onChange}
 										/>
 									</div>
 								</label>
@@ -166,54 +205,75 @@ export default function Profile() {
 									>
 										<input
 											className="border-0 bg-white fs-6 w-100"
+											style={{ outline: "none" }}
 											type="textarea"
-											value={dataProfile?.user_by_pk.about}
-											disabled
-										/>
-										<Icon
-											icon="ant-design:edit-filled"
-											color="#c4c4c4"
-											width="16"
-											height="16"
-											style={{ cursor: "pointer" }}
+											name="about"
+											value={form.about}
+											disabled={!editField}
+											onChange={onChange}
 										/>
 									</div>
 								</label>
+								{!editField ? (
+									<button
+										className={`${styles.button2} rounded p-2 px-3 ms-auto`}
+										type="button"
+										onClick={onClickEdit}
+									>
+										Edit
+									</button>
+								) : (
+									<button
+										className={`${styles.button1} rounded p-2 px-3 ms-auto`}
+										type="button"
+										onClick={onClickSave}
+									>
+										Save
+									</button>
+								)}
 							</div>
-						</div>
+						</form>
 						<div className="d-flex justify-content-center py-4">
 							<button
-								className={`${styles.buttonDisabled} rounded p-2 px-3 me-3`}
+								className={`${
+									!form.published
+										? `${styles.buttonDisabled}`
+										: `${styles.button1}`
+								} rounded p-2 px-3 me-3`}
 								onClick={() => {
-									navigate(`/detail/${userId}`);
+									navigate(`/musician/${userId}`);
 								}}
+								disabled={!form.published}
 							>
 								View Page
 							</button>
-							<button
-								className={`${styles.button1} rounded p-2 px-3`}
-								onClick={() => {
-									handleConfirmation({ type: "publish", status: true });
-								}}
-							>
-								Publish Profile
-							</button>
-							<button
-								className={`${styles.button2} rounded p-2 px-3 d-none`}
-								onClick={() => {
-									handleConfirmation({ type: "unpublish", status: true });
-								}}
-							>
-								Unpublish Profile
-							</button>
+							{!form.published ? (
+								<button
+									className={`${styles.button1} rounded p-2 px-3`}
+									onClick={() => {
+										handleModal(!openModal);
+									}}
+								>
+									Publish Profile
+								</button>
+							) : (
+								<button
+									className={`${styles.button2} rounded p-2 px-3`}
+									onClick={() => {
+										handleModal(!openModal);
+									}}
+								>
+									Unpublish Profile
+								</button>
+							)}
 						</div>
 					</Fragment>
 				) : (
 					""
 				)}
 			</div>
-			{openModal.status && (
-				<ConfirmationModal onClick={handleConfirmation} type={openModal.type} />
+			{openModal && (
+				<ConfirmationModal onClick={handleModal} published={form.published} />
 			)}
 		</div>
 	);

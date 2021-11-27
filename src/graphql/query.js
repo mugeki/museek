@@ -26,6 +26,7 @@ const GetUserProfile = gql`
 			location
 			password
 			phone
+			published
 		}
 	}
 `;
@@ -42,6 +43,7 @@ const GetPopularMusicianList = gql`
 			img_link
 			likes
 			instrument
+			date_published
 		}
 	}
 `;
@@ -64,7 +66,7 @@ const GetNewestMusicianList = gql`
 
 const GetMusicianDetailByID = gql`
 	query MyQuery($id: Int) {
-		user(where: { id: { _eq: $id } }) {
+		user(where: { id: { _eq: $id }, published: { _eq: true } }) {
 			id
 			full_name
 			email

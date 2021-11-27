@@ -14,9 +14,8 @@ const Register = forwardRef((props, ref) => {
 		const value = e.target.value;
 		setForm({ ...form, [name]: value });
 	};
-	const onClick = (e) => {
-		const value = e.target.value;
-		props.onClick(value);
+	const onClick = () => {
+		props.onClick(false);
 	};
 	return (
 		<div className={`${styles.background} modal d-flex justify-content-center`}>

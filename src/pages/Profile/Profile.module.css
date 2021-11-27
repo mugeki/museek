@@ -7,7 +7,7 @@
 
 .button1 {
 	background-color: #f2af02;
-	border: 0;
+	border: 1px solid #f2af02;
 	color: white;
 	height: 100%;
 	width: fit-content;
@@ -23,7 +23,7 @@
 
 .buttonDisabled {
 	background-color: #cccccc;
-	border: 0;
+	border: 1px solid #cccccc;
 	color: white;
 	height: 100%;
 	width: fit-content;

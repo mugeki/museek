@@ -21,8 +21,8 @@ const Login = forwardRef((props, ref) => {
 		const value = e.target.value;
 		setForm({ ...form, [name]: value });
 	};
-	const onClick = (e) => {
-		props.onClick(e.target.value);
+	const onClick = () => {
+		props.onClick(false);
 	};
 
 	const onSubmit = (e) => {
@@ -34,10 +34,10 @@ const Login = forwardRef((props, ref) => {
 	};
 
 	useEffect(() => {
-		if (!loading) {
-			if (data && data.user.length === 0) {
+		if (!loading && data) {
+			if (data.user.length === 0) {
 				setErrorMsg("Username atau password salah");
-			} else if (data && data.user.length !== 0) {
+			} else if (data.user.length !== 0) {
 				setErrorMsg("");
 				const authData = { userId: data.user[0].id, login: true };
 				dispatch(login(authData));
