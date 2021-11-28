@@ -5,7 +5,10 @@ import { GetComments } from "../graphql/query";
 export default function useInsertComment() {
 	const [insertComment, { loading: loadingInsert }] = useMutation(
 		InsertComment,
-		{ refetchQueries: GetComments, awaitRefetchQueries: true }
+		{
+			refetchQueries: [GetComments],
+			awaitRefetchQueries: true,
+		}
 	);
 	return { insertComment, loadingInsert };
 }
