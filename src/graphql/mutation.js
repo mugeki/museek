@@ -78,4 +78,40 @@ const UpdateUserStatus = gql`
 	}
 `;
 
-export { RegisterUser, UpdateUser, UpdateUserStatus };
+const InsertComment = gql`
+	mutation MyMutation(
+		$comment: String
+		$commenter: String
+		$commenter_img: String
+		$date_commented: timestamptz
+		$musician_id: Int
+	) {
+		insert_comments(
+			objects: {
+				comment: $comment
+				commenter: $commenter
+				commenter_img: $commenter_img
+				date_commented: $date_commented
+				musician_id: $musician_id
+			}
+		) {
+			affected_rows
+		}
+	}
+`;
+
+const DeleteComment = gql`
+	mutation MyMutation($id: Int!) {
+		delete_comments_by_pk(id: $id) {
+			comment
+		}
+	}
+`;
+
+export {
+	RegisterUser,
+	UpdateUser,
+	UpdateUserStatus,
+	InsertComment,
+	DeleteComment,
+};

@@ -39,7 +39,11 @@ const Login = forwardRef((props, ref) => {
 				setErrorMsg("Username atau password salah");
 			} else if (data.user.length !== 0) {
 				setErrorMsg("");
-				const authData = { userId: data.user[0].id, login: true };
+				const authData = {
+					userId: data.user[0].id,
+					username: data.user[0].username,
+					login: true,
+				};
 				dispatch(login(authData));
 				navigate(window.location.pathname);
 			}

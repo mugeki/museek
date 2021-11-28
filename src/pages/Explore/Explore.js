@@ -8,16 +8,15 @@ import Loading from "../../components/Loading";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import MusicianList from "./MusicianList";
-import { deleteLocation } from "../../store/locationSlice";
+import { deleteKeyword } from "../../store/keywordSlice";
 
 export default function Explore() {
 	const isLoggedIn = useSelector((state) => state.auth.login);
-	const location = useSelector((state) => state.location.location);
+	const keyword = useSelector((state) => state.keyword.keyword);
 	const dispatch = useDispatch();
-
 	const [filter, setFilter] = useState({
 		date_published: "desc",
-		location: location,
+		keyword: keyword,
 		instrument: [
 			"Vokal",
 			"Gitar",
@@ -37,9 +36,7 @@ export default function Explore() {
 		useGetMusicianByFilter(filter);
 
 	if (errorFilter) console.log(errorFilter);
-	if (!loadingFilter) dispatch(deleteLocation());
-
-	console.log("filter", filter);
+	if (!loadingFilter) dispatch(deleteKeyword());
 
 	return (
 		<div className="pb-3">
@@ -51,7 +48,7 @@ export default function Explore() {
 				className="container mt-4 d-flex flex-column flex-md-row sticky-top bg-white w-100 py-4"
 				style={{ zIndex: 1 }}
 			>
-				<SearchLokasiInput onChange={handleFilter} location={filter.location} />
+				<SearchLokasiInput onChange={handleFilter} keyword={filter.keyword} />
 				<div className="d-flex flex-row mt-3 mt-md-0">
 					<CategoryDropdown onClick={handleFilter} />
 					<SortDropdown onClick={handleFilter} />

@@ -6,6 +6,6 @@ export default function useGetPopularMusicianList() {
 		data: dataPopular,
 		loading: loadingPopular,
 		error: errorPopular,
-	} = useQuery(GetPopularMusicianList);
+	} = useQuery(GetPopularMusicianList, { fetchPolicy: "network-only" });
 	return { dataPopular, loadingPopular, errorPopular };
 }

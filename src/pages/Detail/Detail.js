@@ -1,26 +1,27 @@
-import { useParams } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import Navbar from "../../components/Navbar";
 import NavbarGuest from "../../components/NavbarGuest";
-import Comment from "./Comment";
+import CommentList from "./CommentList";
 import Error from "../../components/Error";
 import Loading from "../../components/Loading";
-import useGetMusicianDetailByID from "../../hooks/useGetMusicianDetailByID ";
+import useGetMusicianDetailByID from "../../hooks/useGetMusicianDetailByID";
 import styles from "./Detail.module.css";
+import { useParams } from "react-router";
 import { useSelector } from "react-redux";
 
 export default function Detail() {
-	const isLoggedIn = useSelector((state) => state.auth.login);
 	const { id } = useParams();
+	const isLoggedIn = useSelector((state) => state.auth.login);
 	const { dataDetail, loadingDetail, errorDetail } =
 		useGetMusicianDetailByID(id);
+
 	if (loadingDetail)
 		return (
 			<div className="position-absolute top-50 start-50 translate-middle">
 				<Loading />
 			</div>
 		);
-	console.log(dataDetail);
+
 	if (errorDetail || dataDetail.user.length === 0)
 		return <Error code={404} message={"Not Found"} />;
 
@@ -81,13 +82,7 @@ export default function Detail() {
 						</div>
 					</div>
 					<div className="py-5">
-						<h5 className="fw-bolder">Komentar (3)</h5>
-						<Comment />
-						<Comment />
-						<Comment />
-						<Comment />
-						<Comment />
-						<Comment />
+						<CommentList musicianId={id} />
 					</div>
 				</div>
 				<div

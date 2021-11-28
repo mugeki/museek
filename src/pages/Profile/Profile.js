@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar";
 import NavbarGuest from "../../components/NavbarGuest";
 import ConfirmationModal from "../../components/ConfirmationModal";
@@ -96,7 +96,7 @@ export default function Profile() {
 				  !loadingUpdate &&
 				  !loadingUpdateStatus &&
 				  dataProfile ? (
-					<Fragment>
+					<>
 						<form className="d-flex flex-column flex-md-row mt-5 justify-content-center">
 							<img
 								src={form.img_link}
@@ -267,7 +267,7 @@ export default function Profile() {
 								</button>
 							)}
 						</div>
-					</Fragment>
+					</>
 				) : (
 					""
 				)}

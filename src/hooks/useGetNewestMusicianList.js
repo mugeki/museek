@@ -6,6 +6,6 @@ export default function useGetNewestMusicianList() {
 		data: dataNewest,
 		loading: loadingNewest,
 		error: errorNewest,
-	} = useQuery(GetNewestMusicianList);
+	} = useQuery(GetNewestMusicianList, { fetchPolicy: "network-only" });
 	return { dataNewest, loadingNewest, errorNewest };
 }

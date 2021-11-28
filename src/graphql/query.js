@@ -24,6 +24,7 @@ const GetUserProfile = gql`
 			img_link
 			instrument
 			location
+			username
 			password
 			phone
 			published
@@ -84,17 +85,18 @@ const GetMusicianByFilter = gql`
 	query MyQuery(
 		$date_published: order_by
 		$likes: order_by
-		$location: String
+		$keyword: String
 		$instrument: [String!]
 		$offset: Int
 	) {
 		user(
 			order_by: { date_published: $date_published, likes: $likes }
 			where: {
-				_or: {
-					location: { _iregex: $location }
-					instrument: { _in: $instrument }
-				}
+				_or: [
+					{ location: { _iregex: $keyword } }
+					{ full_name: { _iregex: $keyword } }
+				]
+				instrument: { _in: $instrument }
 				published: { _eq: true }
 			}
 			offset: $offset
@@ -110,6 +112,18 @@ const GetMusicianByFilter = gql`
 	}
 `;
 
+const GetComments = gql`
+	query MyQuery($musician_id: Int!) {
+		comments(where: { musician_id: { _eq: $musician_id } }) {
+			id
+			comment
+			commenter
+			commenter_img
+			date_commented
+		}
+	}
+`;
+
 export {
 	GetUsernameAndPassword,
 	GetUserProfile,
@@ -117,4 +131,5 @@ export {
 	GetNewestMusicianList,
 	GetMusicianDetailByID,
 	GetMusicianByFilter,
+	GetComments,
 };

@@ -2,32 +2,32 @@ import { Icon } from "@iconify/react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { passLocation } from "../../store/locationSlice";
+import { passKeyword } from "../../store/keywordSlice";
 import styles from "./SearchInput.module.css";
 
 export default function SearchInput() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const [location, setLocation] = useState("");
+	const [keyword, setKeyword] = useState("");
 	const onChange = (e) => {
-		setLocation(e.target.value);
+		setKeyword(e.target.value);
 	};
 	const onClick = () => {
-		dispatch(passLocation(location));
+		dispatch(passKeyword(keyword));
 		navigate("/explore");
 	};
 	return (
 		<div className={`bg-white ps-2 rounded ${styles.searchbar}`}>
-			<Icon icon="ant-design:search-outlined" color="#8f8d8d" />
+			<Icon icon="ant-design:keyword-outlined" color="#8f8d8d" />
 			<input
-				className={`${styles.input} ps-2`}
-				value={location}
-				name="location"
-				placeholder="Cari musisi berdasar lokasi"
+				className={`${styles.input} ps-2 text-truncate`}
+				value={keyword}
+				name="keyword"
+				placeholder="Cari lokasi / nama musisi"
 				onChange={onChange}
 			/>
 			<button
-				className={`border-0 text-white ${styles.button} rounded-end p-2`}
+				className={`border-0 text-white ${styles.button} rounded-end p-2 px-4`}
 				onClick={onClick}
 			>
 				Cari

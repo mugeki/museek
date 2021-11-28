@@ -2,11 +2,11 @@ import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import locationSlice from "./locationSlice";
+import keywordSlice from "./keywordSlice";
 import loginSlice from "./loginSlice";
 
 const reducer = combineReducers({
-	location: locationSlice,
+	keyword: keywordSlice,
 	auth: loginSlice,
 });
 
