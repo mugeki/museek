@@ -44,6 +44,7 @@ export default function CommentInput(props) {
 			commenter_img: commenter.img_link,
 			date_commented: commentDate,
 		});
+		setComment("");
 	};
 
 	return (

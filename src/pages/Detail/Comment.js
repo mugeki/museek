@@ -2,6 +2,10 @@ import { Icon } from "@iconify/react";
 
 export default function Comment(props) {
 	const { id, commenter, img, comment, dateCommented, currentUser } = props;
+	const convertedDate = new Date(Date.parse(dateCommented)).toLocaleDateString(
+		"en-US"
+	);
+	console.log("date", convertedDate);
 	const defaultImg =
 		"https://firebasestorage.googleapis.com/v0/b/museek-d935c.appspot.com/o/default_avatar.png?alt=media&token=01f59951-b62a-462b-b50a-fb27de146e0c";
 
@@ -34,7 +38,7 @@ export default function Comment(props) {
 			<div className="d-flex flex-column flex-fill ms-1 ms-md-4 w-75">
 				<h6 className="fw-bolder">{commenter}</h6>
 				<p>{comment}</p>
-				<p style={{ color: "#8F8D8D" }}>4 days ago</p>
+				<p style={{ color: "#8F8D8D" }}>{convertedDate}</p>
 			</div>
 			{currentUser === commenter ? (
 				<Icon
