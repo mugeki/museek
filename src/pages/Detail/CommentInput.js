@@ -2,14 +2,12 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { useSelector } from "react-redux";
 import LoadingSmall from "../../components/LoadingSmall";
-// import useInsertComment from "../../hooks/useInsertComment";
 import useGetUserProfile from "../../hooks/useGetUserProfile";
 import TextareaAutosize from "react-textarea-autosize";
 import styles from "./CommentInput.module.css";
 
 export default function CommentInput(props) {
 	const { id: musicianId } = useParams();
-
 	const userId = useSelector((state) => state.auth.userId);
 	const { dataProfile, loadingProfile } = useGetUserProfile(userId);
 	const [comment, setComment] = useState("");

@@ -108,10 +108,31 @@ const DeleteComment = gql`
 	}
 `;
 
+const UpdateLikes = gql`
+	mutation MyMutation(
+		$user_id: Int!
+		$liked_musician: _text
+		$musician_id: Int!
+		$likes: Int
+	) {
+		update_user(where: { id: { _eq: $musician_id } }, _set: { likes: $likes }) {
+			affected_rows
+		}
+		update_user_by_pk(
+			pk_columns: { id: $user_id }
+			_set: { liked_musician: $liked_musician }
+		) {
+			id
+			liked_musician
+		}
+	}
+`;
+
 export {
 	RegisterUser,
 	UpdateUser,
 	UpdateUserStatus,
 	InsertComment,
 	DeleteComment,
+	UpdateLikes,
 };

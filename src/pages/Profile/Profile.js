@@ -10,6 +10,7 @@ import Loading from "../../components/Loading";
 import { useNavigate, useParams } from "react-router-dom";
 import Error from "../../components/Error";
 import useUpdateUserStatus from "../../hooks/useUpdateUserStatus";
+import TextareaAutosize from "react-textarea-autosize";
 
 export default function Profile() {
 	const navigate = useNavigate();
@@ -111,8 +112,7 @@ export default function Profile() {
 										style={{ borderBottom: "1px solid #C4C4C4" }}
 									>
 										<input
-											className="border-0 bg-white fs-6 w-100"
-											style={{ outline: "none" }}
+											className={`${styles.input} border-0 bg-white fs-6 w-100`}
 											type="text"
 											name="full_name"
 											value={form.full_name}
@@ -128,8 +128,7 @@ export default function Profile() {
 										style={{ borderBottom: "1px solid #C4C4C4" }}
 									>
 										<input
-											className="border-0 bg-white fs-6 w-100"
-											style={{ outline: "none" }}
+											className={`${styles.input} border-0 bg-white fs-6 w-100`}
 											type="text"
 											name="location"
 											value={form.location}
@@ -145,8 +144,8 @@ export default function Profile() {
 										style={{ borderBottom: "1px solid #C4C4C4" }}
 									>
 										<select
-											className="border-0 bg-white fs-6 w-100"
-											style={{ appearance: "none", outline: "none" }}
+											className={`${styles.input} border-0 bg-white fs-6 w-100`}
+											style={{ appearance: "none" }}
 											name="instrument"
 											value={form.instrument}
 											disabled={!editField}
@@ -170,8 +169,7 @@ export default function Profile() {
 										style={{ borderBottom: "1px solid #C4C4C4" }}
 									>
 										<input
-											className="border-0 bg-white fs-6 w-100"
-											style={{ outline: "none" }}
+											className={`${styles.input} border-0 bg-white fs-6 w-100`}
 											type="number"
 											name="phone"
 											value={form.phone}
@@ -187,8 +185,7 @@ export default function Profile() {
 										style={{ borderBottom: "1px solid #C4C4C4" }}
 									>
 										<input
-											className="border-0 bg-white fs-6 w-100"
-											style={{ outline: "none" }}
+											className={`${styles.input} border-0 bg-white fs-6 w-100`}
 											type="email"
 											name="email"
 											value={form.email}
@@ -203,10 +200,9 @@ export default function Profile() {
 										className={`d-flex mb-4 justify-content-between`}
 										style={{ borderBottom: "1px solid #C4C4C4" }}
 									>
-										<input
-											className="border-0 bg-white fs-6 w-100"
-											style={{ outline: "none" }}
-											type="textarea"
+										<TextareaAutosize
+											className={`${styles.input} border-0 bg-white fs-6 w-100`}
+											style={{ resize: "none" }}
 											name="about"
 											value={form.about}
 											disabled={!editField}

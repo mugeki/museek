@@ -8,6 +8,7 @@ const GetUsernameAndPassword = gql`
 			}
 		) {
 			id
+			img_link
 			username
 			password
 		}
@@ -28,6 +29,7 @@ const GetUserProfile = gql`
 			password
 			phone
 			published
+			liked_musician
 		}
 	}
 `;

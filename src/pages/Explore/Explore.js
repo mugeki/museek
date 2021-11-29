@@ -14,6 +14,7 @@ export default function Explore() {
 	const isLoggedIn = useSelector((state) => state.auth.login);
 	const keyword = useSelector((state) => state.keyword.keyword);
 	const dispatch = useDispatch();
+
 	const [filter, setFilter] = useState({
 		date_published: "desc",
 		keyword: keyword,

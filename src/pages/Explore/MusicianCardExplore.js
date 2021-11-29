@@ -3,7 +3,16 @@ import styles from "./MusicianCardExplore.module.css";
 import { Link } from "react-router-dom";
 
 export default function MusicianCardExplore(props) {
-	const { id, profile, fullName, instrument, location, likes } = props;
+	const {
+		id,
+		profile,
+		fullName,
+		instrument,
+		location,
+		likes,
+		userLikedMusician,
+	} = props;
+
 	return (
 		<div
 			className={`${styles.musician} p-0 mb-4 me-md-3 me-lg-4 d-flex flex-column rounded shadow`}
@@ -26,7 +35,15 @@ export default function MusicianCardExplore(props) {
 						</h6>
 					</div>
 					<div className=" text-center">
-						<Icon icon="ant-design:heart-filled" color="#ea2323" width="31" />
+						{userLikedMusician.includes(id.toString()) ? (
+							<Icon icon="ant-design:heart-filled" color="#ea2323" width="31" />
+						) : (
+							<Icon
+								icon="ant-design:heart-outlined"
+								color="#ea2323"
+								width="31"
+							/>
+						)}
 						<p>
 							{likes > 999
 								? `${Number.parseFloat(likes / 1000).toPrecision(2)}k`

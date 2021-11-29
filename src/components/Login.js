@@ -43,6 +43,7 @@ const Login = forwardRef((props, ref) => {
 					userId: data.user[0].id,
 					username: data.user[0].username,
 					login: true,
+					imgLink: data.user[0].img_link,
 				};
 				dispatch(login(authData));
 				navigate(window.location.pathname);
