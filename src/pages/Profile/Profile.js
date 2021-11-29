@@ -11,6 +11,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import Error from "../../components/Error";
 import useUpdateUserStatus from "../../hooks/useUpdateUserStatus";
 import TextareaAutosize from "react-textarea-autosize";
+import { app } from "../../firebase/firebase";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export default function Profile() {
 	const navigate = useNavigate();
@@ -20,6 +22,7 @@ export default function Profile() {
 
 	const [openModal, setOpenModal] = useState(false);
 	const [editField, setEditField] = useState(false);
+	const [loadingUpload, setLoadingUpload] = useState(false);
 	const [form, setForm] = useState({
 		img_link: "",
 		full_name: "",
@@ -71,6 +74,22 @@ export default function Profile() {
 		setForm({ ...form, [name]: value });
 	};
 
+	const onChangeImage = (e) => {
+		const file = e.target.files[0];
+		const storageRef = getStorage();
+		const fileRef = ref(storageRef, file.name);
+		setLoadingUpload(true);
+		uploadBytes(fileRef, file).then(() => {
+			getDownloadURL(fileRef)
+				.then((url) => {
+					setForm({ ...form, img_link: url });
+				})
+				.then(() => {
+					setLoadingUpload(false);
+				});
+		});
+	};
+
 	const onClickEdit = () => {
 		setEditField(!editField);
 	};
@@ -99,11 +118,31 @@ export default function Profile() {
 				  dataProfile ? (
 					<>
 						<form className="d-flex flex-column flex-md-row mt-5 justify-content-center">
-							<img
-								src={form.img_link}
-								alt="musician"
-								className={`${styles.profile} rounded me-md-4`}
-							/>
+							<label className="pe-md-4" htmlFor="img-input">
+								{loadingUpload ? (
+									<div className="d-block m-auto" style={{ width: "360px" }}>
+										<Loading />
+										<p className="text-center" style={{ color: "#f2af02" }}>
+											Uploading image...
+										</p>
+									</div>
+								) : (
+									<img
+										src={form.img_link}
+										alt="profile"
+										className={`${styles.profile} rounded`}
+									/>
+								)}
+
+								<input
+									className="d-none"
+									type="file"
+									id="img-input"
+									disabled={!editField}
+									onChange={onChangeImage}
+								/>
+							</label>
+
 							<div className={`${styles.form} d-flex flex-column mt-4 mt-md-0`}>
 								<label className="fw-bolder fs-5">
 									Nama Lengkap

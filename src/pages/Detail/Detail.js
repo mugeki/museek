@@ -29,7 +29,6 @@ export default function Detail() {
 	const onLike = () => {
 		const likes = dataSubs?.user_by_pk.likes;
 		const updatedLikedMusician = `{${[...likedMusician, id].toString()}}`;
-		console.log("like", updatedLikedMusician);
 		updateLikes({
 			variables: {
 				musician_id: id,
@@ -46,7 +45,6 @@ export default function Detail() {
 		const updatedLikedMusician = `{${likedMusician.filter(
 			(item) => item !== id
 		)}}`;
-		console.log("dislike", updatedLikedMusician);
 		updateLikes({
 			variables: {
 				musician_id: id,
