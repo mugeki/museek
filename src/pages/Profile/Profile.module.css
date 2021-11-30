@@ -1,13 +1,13 @@
 .profile {
 	width: 100%;
-	height: 60%;
+	height: 300px;
 	object-fit: cover;
 	cursor: pointer;
 }
 
 .button1 {
 	background-color: #f2af02;
-	border: 0;
+	border: 1px solid #f2af02;
 	color: white;
 	height: 100%;
 	width: fit-content;
@@ -23,19 +23,38 @@
 
 .buttonDisabled {
 	background-color: #cccccc;
-	border: 0;
+	border: 1px solid #cccccc;
 	color: white;
 	height: 100%;
 	width: fit-content;
+}
+
+.error {
+	border: 2px solid #dc3545 !important;
 }
 
 .form {
 	width: 100%;
 }
 
+.input::placeholder {
+	color: #8f8d8d;
+}
+
+.input[type="number"] {
+	-moz-appearance: textfield;
+}
+
+.input::-webkit-outer-spin-button,
+.input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
 @media (min-width: 768px) {
 	.profile {
 		width: 360px;
+		height: 528px;
 	}
 	.form {
 		width: 50%;

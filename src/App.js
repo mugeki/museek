@@ -1,26 +1,42 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import client from "./apollo-client";
+import { ApolloProvider } from "@apollo/client";
 import Home from "./pages/Home/Home";
 import Explore from "./pages/Explore/Explore";
 import Detail from "./pages/Detail/Detail";
 import Profile from "./pages/Profile/Profile";
+import Error from "./components/Error";
 import Footer from "./components/Footer";
+import { store, persistor } from "./store/store";
 import "./App.css";
 
 function App() {
 	return (
-		<div className="d-flex flex-column min-vh-100">
-			<div className="flex-fill">
-				<BrowserRouter>
-					<Routes>
-						<Route path="/" exact element={<Home />} />
-						<Route path="/explore" exact element={<Explore />} />
-						<Route path="/detail" exact element={<Detail />} />
-						<Route path="/profile" exact element={<Profile />} />
-					</Routes>
-				</BrowserRouter>
+		<ApolloProvider client={client}>
+			<div className="d-flex flex-column min-vh-100">
+				<div className="flex-fill">
+					<Provider store={store}>
+						<PersistGate loading={null} persistor={persistor}>
+							<BrowserRouter>
+								<Routes>
+									<Route path="/" exact element={<Home />} />
+									<Route path="/explore" exact element={<Explore />} />
+									<Route path="/musician/:id" exact element={<Detail />} />
+									<Route path="/profile/:id" exact element={<Profile />} />
+									<Route
+										path="*"
+										element={<Error code={404} message={"Not Found"} />}
+									/>
+								</Routes>
+							</BrowserRouter>
+						</PersistGate>
+					</Provider>
+				</div>
+				<Footer />
 			</div>
-			<Footer />
-		</div>
+		</ApolloProvider>
 	);
 }
 

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-export default function SortDropdown() {
+export default function SortDropdown(props) {
 	const ref = useRef();
 	const [open, setOpen] = useState(false);
 	const [sort, setSort] = useState("newest");
@@ -17,11 +17,20 @@ export default function SortDropdown() {
 		};
 	}, [open]);
 
-	const onClickSort = (e) => {
-		setSort(e.target.innerText.toLowerCase());
+	const handleSort = (value) => {
+		if (value === "newest") {
+			props.onClick({ date_published: "desc", likes: undefined });
+		} else {
+			props.onClick({ date_published: undefined, likes: "desc" });
+		}
 	};
 
-	const onClick = () => {
+	const onClickSort = (e) => {
+		setSort(e.target.innerText.toLowerCase());
+		handleSort(e.target.innerText.toLowerCase());
+	};
+
+	const onClickOpen = () => {
 		setOpen(!open);
 	};
 
@@ -31,7 +40,7 @@ export default function SortDropdown() {
 				className="btn btn-secondary dropdown-toggle ms-3 bg-white text-black h-100"
 				style={{ border: "1px solid #8F8D8D" }}
 				type="button"
-				onClick={() => onClick()}
+				onClick={() => onClickOpen()}
 			>
 				Sort By
 			</button>
@@ -42,15 +51,21 @@ export default function SortDropdown() {
 					ref={ref}
 				>
 					<p
-						className={sort === "newest" ? "fw-bolder" : ""}
-						style={{ cursor: "pointer" }}
+						style={
+							sort === "newest"
+								? { cursor: "pointer", color: "#f2af02" }
+								: { cursor: "pointer" }
+						}
 						onClick={onClickSort}
 					>
 						Newest
 					</p>
 					<p
-						className={sort === "most liked" ? "fw-bolder" : ""}
-						style={{ cursor: "pointer" }}
+						style={
+							sort === "most liked"
+								? { cursor: "pointer", color: "#f2af02" }
+								: { cursor: "pointer" }
+						}
 						onClick={onClickSort}
 					>
 						Most Liked
