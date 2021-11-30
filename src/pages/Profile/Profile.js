@@ -94,19 +94,21 @@ export default function Profile() {
 	};
 
 	const onChangeImage = (e) => {
-		const file = e.target.files[0];
-		const storageRef = getStorage();
-		const fileRef = ref(storageRef, file.name);
-		setLoadingUpload(true);
-		uploadBytes(fileRef, file).then(() => {
-			getDownloadURL(fileRef)
-				.then((url) => {
-					setForm({ ...form, img_link: url });
-				})
-				.then(() => {
-					setLoadingUpload(false);
-				});
-		});
+		if (app) {
+			const file = e.target.files[0];
+			const storageRef = getStorage();
+			const fileRef = ref(storageRef, file.name);
+			setLoadingUpload(true);
+			uploadBytes(fileRef, file).then(() => {
+				getDownloadURL(fileRef)
+					.then((url) => {
+						setForm({ ...form, img_link: url });
+					})
+					.then(() => {
+						setLoadingUpload(false);
+					});
+			});
+		}
 	};
 
 	const onClickEdit = (e) => {
