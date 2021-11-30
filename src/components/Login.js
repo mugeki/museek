@@ -76,7 +76,7 @@ const Login = forwardRef((props, ref) => {
 						fill="#f2af02"
 					/>
 				</svg>
-				<h2 className="fw-bold text-center p-5 pb-4">Sign In to Museek</h2>
+				<h2 className="fw-bold text-center p-5 pb-4">Sign In to Muzeek</h2>
 				<p className="text-center text-danger">{errorMsg}</p>
 				<form className="px-4 px-md-5" onSubmit={onSubmit}>
 					<input

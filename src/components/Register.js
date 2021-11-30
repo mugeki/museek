@@ -125,7 +125,7 @@ const Register = forwardRef((props, ref) => {
 							fill="#f2af02"
 						/>
 					</svg>
-					<h2 className="fw-bold text-center p-5 pb-4">Join to Museek</h2>
+					<h2 className="fw-bold text-center p-5 pb-4">Join to Muzeek</h2>
 					<form className="px-4 px-md-5" onSubmit={onSubmit}>
 						<input
 							className={
