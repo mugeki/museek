@@ -51,15 +51,21 @@ export default function SortDropdown(props) {
 					ref={ref}
 				>
 					<p
-						className={sort === "newest" ? "fw-bolder" : ""}
-						style={{ cursor: "pointer" }}
+						style={
+							sort === "newest"
+								? { cursor: "pointer", color: "#f2af02" }
+								: { cursor: "pointer" }
+						}
 						onClick={onClickSort}
 					>
 						Newest
 					</p>
 					<p
-						className={sort === "most liked" ? "fw-bolder" : ""}
-						style={{ cursor: "pointer" }}
+						style={
+							sort === "most liked"
+								? { cursor: "pointer", color: "#f2af02" }
+								: { cursor: "pointer" }
+						}
 						onClick={onClickSort}
 					>
 						Most Liked
