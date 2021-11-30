@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useState } from "react";
 import styles from "./Login.module.css";
-import useGetUsernameAndPassword from "../hooks/useGetUsernameAndPassword";
+import useGetUserCredential from "../hooks/useGetUserCredential";
 import LoadingSmall from "./LoadingSmall";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -9,8 +9,7 @@ import { login } from "../store/loginSlice";
 const Login = forwardRef((props, ref) => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const { getUsernameAndPassword, data, loading, error } =
-		useGetUsernameAndPassword();
+	const { getUserCredential, data, loading, error } = useGetUserCredential();
 	const [form, setForm] = useState({
 		username: "",
 		password: "",
@@ -27,7 +26,7 @@ const Login = forwardRef((props, ref) => {
 
 	const onSubmit = (e) => {
 		e.preventDefault();
-		getUsernameAndPassword({ variables: form });
+		getUserCredential({ variables: { ...form } });
 		if (error) {
 			console.log(error);
 		}
@@ -37,7 +36,7 @@ const Login = forwardRef((props, ref) => {
 		if (!loading && data) {
 			if (data.user.length === 0) {
 				setErrorMsg("Username atau password salah");
-			} else if (data.user.length !== 0) {
+			} else {
 				setErrorMsg("");
 				const authData = {
 					userId: data.user[0].id,
@@ -81,7 +80,10 @@ const Login = forwardRef((props, ref) => {
 				<p className="text-center text-danger">{errorMsg}</p>
 				<form className="px-4 px-md-5" onSubmit={onSubmit}>
 					<input
-						className={`${styles.input} form-control px-3 py-2 mb-4`}
+						className={
+							(errorMsg !== "" ? styles.error : "") +
+							` ${styles.input} form-control px-3 py-2 mb-4`
+						}
 						value={form.username}
 						name="username"
 						placeholder="Username"
@@ -89,7 +91,10 @@ const Login = forwardRef((props, ref) => {
 						type="text"
 					/>
 					<input
-						className={`${styles.input} form-control px-3 py-2 mb-4`}
+						className={
+							(errorMsg !== "" ? styles.error : "") +
+							` ${styles.input} form-control px-3 py-2 mb-4`
+						}
 						value={form.password}
 						name="password"
 						placeholder="Password"

@@ -18,6 +18,8 @@ const RegisterUser = gql`
 			}
 		) {
 			id
+			username
+			img_link
 		}
 	}
 `;
@@ -31,8 +33,8 @@ const UpdateUser = gql`
 		$email: String
 		$about: String
 		$location: String
-		$password: String
 		$phone: String
+		$username: String
 	) {
 		update_user_by_pk(
 			pk_columns: { id: $id }
@@ -58,6 +60,12 @@ const UpdateUser = gql`
 			email
 			date_published
 			about
+		}
+		update_comments(
+			where: { commenter: { _eq: $username } }
+			_set: { commenter_img: $img_link }
+		) {
+			affected_rows
 		}
 	}
 `;

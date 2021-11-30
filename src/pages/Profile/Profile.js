@@ -3,7 +3,7 @@ import Navbar from "../../components/Navbar";
 import NavbarGuest from "../../components/NavbarGuest";
 import ConfirmationModal from "../../components/ConfirmationModal";
 import styles from "./Profile.module.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useGetUserProfile from "../../hooks/useGetUserProfile";
 import useUpdateUser from "../../hooks/useUpdateUser";
 import Loading from "../../components/Loading";
@@ -13,16 +13,28 @@ import useUpdateUserStatus from "../../hooks/useUpdateUserStatus";
 import TextareaAutosize from "react-textarea-autosize";
 import { app } from "../../firebase/firebase";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { login } from "../../store/loginSlice";
+import useValidateForm from "../../hooks/useValidateForm";
 
 export default function Profile() {
 	const navigate = useNavigate();
+	const reduxData = useSelector((state) => state.auth);
 	const isLoggedIn = useSelector((state) => state.auth.login);
+	const username = useSelector((state) => state.auth.username);
 	const userId = useSelector((state) => state.auth.userId);
+	const dispatch = useDispatch();
 	const { id } = useParams();
+	const { validateForm } = useValidateForm();
 
 	const [openModal, setOpenModal] = useState(false);
 	const [editField, setEditField] = useState(false);
 	const [loadingUpload, setLoadingUpload] = useState(false);
+	const [errorMsg, setErrorMsg] = useState({
+		full_name: "",
+		location: "",
+		phone: "",
+		email: "",
+	});
 	const [form, setForm] = useState({
 		img_link: "",
 		full_name: "",
@@ -74,6 +86,13 @@ export default function Profile() {
 		setForm({ ...form, [name]: value });
 	};
 
+	const onBlur = (e) => {
+		const name = e.target.name;
+		const value = e.target.value;
+		const messages = validateForm(name, value);
+		setErrorMsg({ ...errorMsg, ...messages });
+	};
+
 	const onChangeImage = (e) => {
 		const file = e.target.files[0];
 		const storageRef = getStorage();
@@ -90,13 +109,30 @@ export default function Profile() {
 		});
 	};
 
-	const onClickEdit = () => {
+	const onClickEdit = (e) => {
+		e.preventDefault();
 		setEditField(!editField);
 	};
 
-	const onClickSave = () => {
-		updateUser({ variables: { id: id, ...form } });
-		setEditField(!editField);
+	const onClickSave = (e) => {
+		e.preventDefault();
+		const messages = validateForm(undefined, undefined, form);
+		setErrorMsg({ ...errorMsg, ...messages });
+		const invalidFields = Object.keys(messages).filter(
+			(key) => messages[key] !== ""
+		);
+		if (invalidFields.length === 0) {
+			updateUser({
+				variables: {
+					...form,
+					id,
+					username,
+					commenter_img: form.img_link,
+				},
+			});
+			dispatch(login({ ...reduxData, imgLink: form.img_link }));
+			setEditField(!editField);
+		}
 	};
 
 	if (userId === -1 || userId !== parseInt(id)) {
@@ -117,7 +153,10 @@ export default function Profile() {
 				  !loadingUpdateStatus &&
 				  dataProfile ? (
 					<>
-						<form className="d-flex flex-column flex-md-row mt-5 justify-content-center">
+						<form
+							className="d-flex flex-column flex-md-row mt-5 justify-content-center"
+							onSubmit={onClickSave}
+						>
 							<label className="pe-md-4" htmlFor="img-input">
 								{loadingUpload ? (
 									<div className="d-block m-auto" style={{ width: "360px" }}>
@@ -131,6 +170,9 @@ export default function Profile() {
 										src={form.img_link}
 										alt="profile"
 										className={`${styles.profile} rounded`}
+										style={
+											!editField ? { cursor: "default" } : { cursor: "pointer" }
+										}
 									/>
 								)}
 
@@ -147,48 +189,63 @@ export default function Profile() {
 								<label className="fw-bolder fs-5">
 									Nama Lengkap
 									<div
-										className={`d-flex mb-4 justify-content-between`}
+										className={
+											(errorMsg.full_name !== "" ? styles.error : "mb-4") +
+											" rounded d-flex justify-content-between"
+										}
 										style={{ borderBottom: "1px solid #C4C4C4" }}
 									>
 										<input
-											className={`${styles.input} border-0 bg-white fs-6 w-100`}
+											className={`${styles.input} rounded border-0 bg-white fs-6 w-100 ps-1`}
 											type="text"
 											name="full_name"
 											value={form.full_name}
 											disabled={!editField}
 											onChange={onChange}
+											onBlur={onBlur}
 										/>
 									</div>
+									<p className="fw-normal fs-6 text-danger">
+										{errorMsg.full_name}
+									</p>
 								</label>
 								<label className="fw-bolder fs-5">
 									Lokasi
 									<div
-										className={`d-flex mb-4 justify-content-between`}
+										className={
+											(errorMsg.location !== "" ? styles.error : "mb-4") +
+											" rounded d-flex justify-content-between"
+										}
 										style={{ borderBottom: "1px solid #C4C4C4" }}
 									>
 										<input
-											className={`${styles.input} border-0 bg-white fs-6 w-100`}
+											className={`${styles.input} rounded border-0 bg-white fs-6 w-100 ps-1`}
 											type="text"
 											name="location"
 											value={form.location}
 											disabled={!editField}
 											onChange={onChange}
+											onBlur={onBlur}
 										/>
 									</div>
+									<p className="fw-normal fs-6 text-danger">
+										{errorMsg.location}
+									</p>
 								</label>
 								<label className="fw-bolder fs-5">
 									Instrumen
 									<div
-										className={`d-flex mb-4 justify-content-between`}
+										className="rounded d-flex justify-content-between mb-4"
 										style={{ borderBottom: "1px solid #C4C4C4" }}
 									>
 										<select
-											className={`${styles.input} border-0 bg-white fs-6 w-100`}
+											className={`${styles.input} rounded border-0 bg-white fs-6 w-100 ps-1`}
 											style={{ appearance: "none" }}
 											name="instrument"
 											value={form.instrument}
 											disabled={!editField}
 											onChange={onChange}
+											onBlur={onBlur}
 										>
 											<option value="-">-</option>
 											<option value="Vokal">Vokal</option>
@@ -204,55 +261,65 @@ export default function Profile() {
 								<label className="fw-bolder fs-5">
 									No. Handphone
 									<div
-										className={`d-flex mb-4 justify-content-between`}
+										className={
+											(errorMsg.phone !== "" ? styles.error : "mb-4") +
+											" rounded d-flex justify-content-between"
+										}
 										style={{ borderBottom: "1px solid #C4C4C4" }}
 									>
 										<input
-											className={`${styles.input} border-0 bg-white fs-6 w-100`}
+											className={`${styles.input} rounded border-0 bg-white fs-6 w-100 ps-1`}
 											type="number"
 											name="phone"
 											value={form.phone}
 											disabled={!editField}
 											onChange={onChange}
+											onBlur={onBlur}
 										/>
 									</div>
+									<p className="fw-normal fs-6 text-danger">{errorMsg.phone}</p>
 								</label>
 								<label className="fw-bolder fs-5">
 									Email
 									<div
-										className={`d-flex mb-4 justify-content-between`}
+										className={
+											(errorMsg.email !== "" ? styles.error : "mb-4") +
+											" rounded d-flex justify-content-between"
+										}
 										style={{ borderBottom: "1px solid #C4C4C4" }}
 									>
 										<input
-											className={`${styles.input} border-0 bg-white fs-6 w-100`}
+											className={`${styles.input} rounded border-0 bg-white fs-6 w-100 ps-1`}
 											type="email"
 											name="email"
 											value={form.email}
 											disabled={!editField}
 											onChange={onChange}
+											onBlur={onBlur}
 										/>
 									</div>
+									<p className="fw-normal fs-6 text-danger">{errorMsg.email}</p>
 								</label>
 								<label className="fw-bolder fs-5">
 									Tentang
 									<div
-										className={`d-flex mb-4 justify-content-between`}
+										className="rounded d-flex justify-content-between mb-4"
 										style={{ borderBottom: "1px solid #C4C4C4" }}
 									>
 										<TextareaAutosize
-											className={`${styles.input} border-0 bg-white fs-6 w-100`}
+											className={`${styles.input} rounded border-0 bg-white fs-6 w-100 ps-1`}
 											style={{ resize: "none" }}
 											name="about"
 											value={form.about}
 											disabled={!editField}
 											onChange={onChange}
+											onBlur={onBlur}
 										/>
 									</div>
 								</label>
 								{!editField ? (
 									<button
 										className={`${styles.button2} rounded p-2 px-3 ms-auto`}
-										type="button"
 										onClick={onClickEdit}
 									>
 										Edit
@@ -260,8 +327,7 @@ export default function Profile() {
 								) : (
 									<button
 										className={`${styles.button1} rounded p-2 px-3 ms-auto`}
-										type="button"
-										onClick={onClickSave}
+										type="submit"
 									>
 										Save
 									</button>

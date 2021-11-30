@@ -22,7 +22,7 @@ export default function MusicianCardExplore(props) {
 				alt="musician"
 				className={`${styles.profile} rounded-top`}
 			/>
-			<div className="d-flex flex-column justify-content-between p-4 h-100 rounded-bottom">
+			<div className="d-flex flex-column justify-content-between p-4 rounded-bottom">
 				<div className="d-flex justify-content-between bg-white w-100">
 					<div className="d-block w-75">
 						<h5 className="mb-1 text-truncate">{fullName}</h5>

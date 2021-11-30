@@ -30,7 +30,7 @@ export default function Comment(props) {
 					className="rounded-circle"
 					src={img}
 					alt="user"
-					style={{ width: "50px", height: "50px" }}
+					style={{ width: "50px", height: "50px", objectFit: "cover" }}
 				/>
 			)}
 

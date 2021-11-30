@@ -1,4 +1,4 @@
-export default function LoadingSmall() {
+export default function LoadingSmallOrange() {
 	return (
 		<svg
 			style={{

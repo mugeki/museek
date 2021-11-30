@@ -74,20 +74,6 @@ export default function Detail() {
 		};
 	}, [loadingProfile, dataProfile, likedMusician, subscribeLikes, userId]);
 
-	// useEffect(() => {
-	// 	console.log("load profile", loadingProfile);
-	// 	console.log("load detail", loadingDetail);
-	// 	console.log("load subs", loadingSubs);
-	// 	console.log("load updatelike", loadingUpdateLikes);
-	// 	console.log("data subs", dataSubs);
-	// }, [
-	// 	loadingProfile,
-	// 	loadingDetail,
-	// 	loadingSubs,
-	// 	loadingUpdateLikes,
-	// 	dataSubs,
-	// ]);
-
 	if (loadingDetail || loadingSubs)
 		return (
 			<div className="position-absolute top-50 start-50 translate-middle">

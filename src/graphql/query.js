@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-const GetUsernameAndPassword = gql`
+const GetUserCredential = gql`
 	query MyQuery($username: String, $password: String) {
 		user(
 			where: {
@@ -102,7 +102,6 @@ const GetMusicianByFilter = gql`
 				published: { _eq: true }
 			}
 			offset: $offset
-			limit: 4
 		) {
 			id
 			full_name
@@ -127,7 +126,7 @@ const GetComments = gql`
 `;
 
 export {
-	GetUsernameAndPassword,
+	GetUserCredential,
 	GetUserProfile,
 	GetPopularMusicianList,
 	GetNewestMusicianList,
