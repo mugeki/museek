@@ -1,4 +1,4 @@
-export default function LoadingSmallOrange() {
+export default function LoadingSmallOrange({ w = "24px", h = "24px" }) {
 	return (
 		<svg
 			style={{
@@ -7,8 +7,8 @@ export default function LoadingSmallOrange() {
 				display: "block",
 				shapeRendering: "auto",
 			}}
-			width="24px"
-			height="24px"
+			width={w}
+			height={h}
 			viewBox="0 0 100 100"
 			preserveAspectRatio="xMidYMid"
 		>

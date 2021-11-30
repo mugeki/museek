@@ -123,7 +123,6 @@ export default function Profile() {
 		const invalidFields = Object.keys(messages).filter(
 			(key) => messages[key] !== "" && key !== "about"
 		);
-		console.log(invalidFields);
 		if (invalidFields.length === 0) {
 			updateUser({
 				variables: {

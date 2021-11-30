@@ -6,9 +6,10 @@ export default function useGetMusicianByFilter(filter) {
 		data: dataFilter,
 		loading: loadingFilter,
 		error: errorFilter,
+		fetchMore,
 	} = useQuery(GetMusicianByFilter, {
-		variables: filter,
+		variables: { ...filter, offset: 0 },
 		fetchPolicy: "network-only",
 	});
-	return { dataFilter, loadingFilter, errorFilter };
+	return { dataFilter, loadingFilter, errorFilter, fetchMore };
 }

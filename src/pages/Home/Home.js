@@ -8,6 +8,7 @@ import styles from "./Home.module.css";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Loading from "../../components/Loading";
+import client from "../../apollo-client";
 
 export default function Home() {
 	const isLoggedIn = useSelector((state) => state.auth.login);
@@ -26,6 +27,12 @@ export default function Home() {
 		if (!loadingNewest) setNewestMusician(dataNewest.user);
 		if (!loadingPopular) setPopularMusician(dataPopular.user);
 	}, [dataNewest, dataPopular, loadingNewest, loadingPopular]);
+
+	useEffect(() => {
+		return () => {
+			client.resetStore();
+		};
+	}, []);
 
 	return (
 		<div className="pb-3">
