@@ -50,7 +50,7 @@ export default function CommentInput(props) {
 			{!loadingProfile && (
 				<div className={`${styles.container} d-flex flex-column rounded`}>
 					<TextareaAutosize
-						className={`${styles.input} w-100 p-2 border-0`}
+						className={`${styles.input} w-100 p-2 border-0 rounded`}
 						value={comment}
 						type="textarea"
 						placeholder="Tulis komentar..."
