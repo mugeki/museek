@@ -26,7 +26,7 @@ export default function Navbar() {
 					style={{ color: "#F2AF02" }}
 					to="/"
 				>
-					MUSEEK
+					MUZEEK
 				</Link>
 				<button
 					className="navbar-toggler"
