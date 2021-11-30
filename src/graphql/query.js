@@ -84,7 +84,7 @@ const GetMusicianDetailByID = gql`
 `;
 
 const GetMusicianByFilter = gql`
-	query MyQuery(
+	query GetMusicianList(
 		$date_published: order_by
 		$likes: order_by
 		$keyword: String
@@ -102,6 +102,7 @@ const GetMusicianByFilter = gql`
 				published: { _eq: true }
 			}
 			offset: $offset
+			limit: 4
 		) {
 			id
 			full_name
@@ -109,6 +110,20 @@ const GetMusicianByFilter = gql`
 			likes
 			location
 			instrument
+		}
+		user_aggregate(
+			where: {
+				_or: [
+					{ location: { _iregex: $keyword } }
+					{ full_name: { _iregex: $keyword } }
+				]
+				instrument: { _in: $instrument }
+				published: { _eq: true }
+			}
+		) {
+			aggregate {
+				count(columns: id)
+			}
 		}
 	}
 `;

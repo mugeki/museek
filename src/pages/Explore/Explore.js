@@ -5,16 +5,20 @@ import CategoryDropdown from "./CategoryDropdown";
 import SortDropdown from "./SortDropdown";
 import useGetMusicianByFilter from "../../hooks/useGetMusicianByFilter";
 import Loading from "../../components/Loading";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import MusicianList from "./MusicianList";
 import { deleteKeyword } from "../../store/keywordSlice";
+import client from "../../apollo-client";
+import styles from "./Explore.module.css";
+import LoadingSmallOrange from "../../components/LoadingSmallOrange";
 
 export default function Explore() {
 	const isLoggedIn = useSelector((state) => state.auth.login);
 	const keyword = useSelector((state) => state.keyword.keyword);
 	const dispatch = useDispatch();
-
+	const [loadingMore, setLoadingMore] = useState(false);
+	const [allDataCount, setAllDataCount] = useState(0);
 	const [filter, setFilter] = useState({
 		date_published: "desc",
 		keyword: keyword,
@@ -27,14 +31,41 @@ export default function Explore() {
 			"Piano",
 			"Strings",
 		],
-		offset: 0,
 	});
 
 	const handleFilter = (value) => {
 		setFilter({ ...filter, ...value });
 	};
-	const { dataFilter, loadingFilter, errorFilter } =
+	const { dataFilter, loadingFilter, errorFilter, fetchMore } =
 		useGetMusicianByFilter(filter);
+
+	const onLoadMore = async () => {
+		setLoadingMore(true);
+		await fetchMore({
+			variables: {
+				...filter,
+				offset: dataFilter.user.length,
+			},
+		});
+
+		setLoadingMore(false);
+	};
+
+	useEffect(() => {
+		if (!loadingFilter && dataFilter) {
+			setAllDataCount(dataFilter.user_aggregate.aggregate.count);
+		}
+	}, [loadingFilter, dataFilter]);
+
+	useEffect(() => {
+		client.resetStore();
+	}, [filter]);
+
+	useEffect(() => {
+		return () => {
+			client.resetStore();
+		};
+	}, []);
 
 	if (errorFilter) console.log(errorFilter);
 	if (!loadingFilter) dispatch(deleteKeyword());
@@ -55,14 +86,29 @@ export default function Explore() {
 					<SortDropdown onClick={handleFilter} />
 				</div>
 			</div>
-			<div className="container my-3">
+			<div className="container my-3 d-flex flex-column">
 				{!loadingFilter ? (
-					dataFilter.user.length === 0 ? (
-						<div>
-							<p>Tidak ditemukan hasil yang cocok.</p>
-						</div>
+					dataFilter?.user.length === 0 ? (
+						<p className="text-center">Tidak ditemukan hasil yang cocok.</p>
 					) : (
-						<MusicianList entries={dataFilter.user} />
+						<>
+							<MusicianList entries={dataFilter?.user} />
+							{loadingFilter ? (
+								""
+							) : loadingMore ? (
+								<LoadingSmallOrange w="34" h="34" />
+							) : dataFilter.user.length === allDataCount ? (
+								<p className="text-center">Semua data telah ditampilkan.</p>
+							) : (
+								<button
+									className={`${styles.button} py-1 px-3 rounded align-self-center`}
+									style={{ cursor: "pointer" }}
+									onClick={onLoadMore}
+								>
+									Lihat lainnya
+								</button>
+							)}
+						</>
 					)
 				) : (
 					<Loading />

@@ -26,12 +26,6 @@ export default function MusicianList(props) {
 		};
 	}, [loadingProfile, dataProfile, likedMusician, userId]);
 
-	// const handleScroll = (e, onLoadMore) => {
-	// 	if (e.target.scrollTop + e.target.clientHeight >= e.target.scrollHeight) {
-	// 		onLoadMore();
-	// 	}
-	// };
-
 	return (
 		<div className="d-flex flex-wrap py-3">
 			{entries.map((item) => (

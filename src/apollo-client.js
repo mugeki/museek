@@ -1,6 +1,7 @@
 import { ApolloClient, InMemoryCache, split, HttpLink } from "@apollo/client";
 import { WebSocketLink } from "@apollo/client/link/ws";
 import { getMainDefinition } from "@apollo/client/utilities";
+import { offsetLimitPagination } from "@apollo/client/utilities";
 
 const wsLink = new WebSocketLink({
 	uri: "wss://sweet-flounder-83.hasura.app/v1/graphql",
@@ -37,7 +38,15 @@ const splitLink = split(
 
 const client = new ApolloClient({
 	link: splitLink,
-	cache: new InMemoryCache(),
+	cache: new InMemoryCache({
+		typePolicies: {
+			Query: {
+				fields: {
+					user: offsetLimitPagination(),
+				},
+			},
+		},
+	}),
 });
 
 export default client;
