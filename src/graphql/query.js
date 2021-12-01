@@ -101,7 +101,7 @@ const GetMusicianByFilter = gql`
 				published: { _eq: true }
 			}
 			offset: $offset
-			limit: 4
+			limit: 8
 		) {
 			id
 			full_name
