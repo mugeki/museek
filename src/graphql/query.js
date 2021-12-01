@@ -35,7 +35,7 @@ const GetUserProfile = gql`
 `;
 
 const GetPopularMusicianList = gql`
-	query MyQuery {
+	query GetPopularMusician {
 		user(
 			order_by: { likes: desc }
 			limit: 4
@@ -46,13 +46,12 @@ const GetPopularMusicianList = gql`
 			img_link
 			likes
 			instrument
-			date_published
 		}
 	}
 `;
 
 const GetNewestMusicianList = gql`
-	query MyQuery {
+	query GetNewestMusician {
 		user(
 			order_by: { date_published: desc }
 			limit: 4

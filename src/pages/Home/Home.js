@@ -5,28 +5,15 @@ import MusicianCard from "./MusicianCard";
 import useGetNewestMusicianList from "../../hooks/useGetNewestMusicianList";
 import useGetPopularMusicianList from "../../hooks/useGetPopularMusicianList";
 import styles from "./Home.module.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import Loading from "../../components/Loading";
 import client from "../../apollo-client";
 
 export default function Home() {
 	const isLoggedIn = useSelector((state) => state.auth.login);
-	const [newestMusician, setNewestMusician] = useState([]);
-	const [popularMusician, setPopularMusician] = useState([]);
-	const { dataNewest, loadingNewest, errorNewest } = useGetNewestMusicianList();
-	const { dataPopular, loadingPopular, errorPopular } =
-		useGetPopularMusicianList();
-
-	if (errorNewest || errorPopular) {
-		console.log(errorNewest);
-		console.log(errorPopular);
-	}
-
-	useEffect(() => {
-		if (!loadingNewest) setNewestMusician(dataNewest.user);
-		if (!loadingPopular) setPopularMusician(dataPopular.user);
-	}, [dataNewest, dataPopular, loadingNewest, loadingPopular]);
+	const { dataNewest, loadingNewest } = useGetNewestMusicianList();
+	const { dataPopular, loadingPopular } = useGetPopularMusicianList();
 
 	useEffect(() => {
 		return () => {
@@ -54,7 +41,7 @@ export default function Home() {
 					{loadingPopular ? (
 						<Loading />
 					) : (
-						popularMusician.map((item) => (
+						dataPopular?.user.map((item) => (
 							<MusicianCard
 								key={item.id}
 								id={item.id}
@@ -69,10 +56,10 @@ export default function Home() {
 			<div className="container my-5">
 				<h2 className="fw-bold">Musisi terbaru</h2>
 				<div className="d-flex flex-wrap justify-content-between py-3">
-					{loadingPopular ? (
+					{loadingNewest ? (
 						<Loading />
 					) : (
-						newestMusician.map((item) => (
+						dataNewest?.user.map((item) => (
 							<MusicianCard
 								key={item.id}
 								id={item.id}

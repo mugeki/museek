@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react";
 export default function Comment(props) {
 	const { id, commenter, img, comment, dateCommented, currentUser } = props;
 	const convertedDate = new Date(Date.parse(dateCommented)).toLocaleDateString(
-		"en-US"
+		"en-GB"
 	);
 	const defaultImg =
 		"https://firebasestorage.googleapis.com/v0/b/museek-d935c.appspot.com/o/default_avatar.png?alt=media&token=01f59951-b62a-462b-b50a-fb27de146e0c";
