@@ -15,6 +15,7 @@ import { app } from "../../firebase/firebase";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { login } from "../../store/loginSlice";
 import useValidateForm from "../../hooks/useValidateForm";
+import imageCompression from "browser-image-compression";
 
 export default function Profile() {
 	const navigate = useNavigate();
@@ -50,6 +51,10 @@ export default function Profile() {
 		useGetUserProfile(userId);
 	const { updateUser, loadingUpdate } = useUpdateUser();
 	const { updateUserStatus, loadingUpdateStatus } = useUpdateUserStatus();
+	const compressionOption = {
+		maxWidthOrHeight: 528,
+		useWebWorker: true,
+	};
 
 	if (errorProfile) console.log(errorProfile);
 
@@ -99,14 +104,16 @@ export default function Profile() {
 			const storageRef = getStorage();
 			const fileRef = ref(storageRef, file.name);
 			setLoadingUpload(true);
-			uploadBytes(fileRef, file).then(() => {
-				getDownloadURL(fileRef)
-					.then((url) => {
-						setForm({ ...form, img_link: url });
-					})
-					.then(() => {
-						setLoadingUpload(false);
-					});
+			imageCompression(file, compressionOption).then((compressedFile) => {
+				uploadBytes(fileRef, compressedFile).then(() => {
+					getDownloadURL(fileRef)
+						.then((url) => {
+							setForm({ ...form, img_link: url });
+						})
+						.then(() => {
+							setLoadingUpload(false);
+						});
+				});
 			});
 		}
 	};
@@ -173,7 +180,9 @@ export default function Profile() {
 										alt="profile"
 										className={`${styles.profile} rounded`}
 										style={
-											!editField ? { cursor: "default" } : { cursor: "pointer" }
+											!editField || loadingUpload
+												? { cursor: "default" }
+												: { cursor: "pointer" }
 										}
 									/>
 								)}
@@ -182,7 +191,7 @@ export default function Profile() {
 									className="d-none"
 									type="file"
 									id="img-input"
-									disabled={!editField}
+									disabled={!editField || loadingUpload}
 									onChange={onChangeImage}
 								/>
 							</label>
