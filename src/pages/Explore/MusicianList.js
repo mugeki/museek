@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import useGetUserProfile from "../../hooks/useGetUserProfile";
-import MusicianCardExplore from "./MusicianCardExplore";
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import useGetUserProfile from '../../hooks/useGetUserProfile';
+import MusicianCardExplore from './MusicianCardExplore';
 
 export default function MusicianList(props) {
 	const { entries } = props;
@@ -28,7 +28,7 @@ export default function MusicianList(props) {
 
 	return (
 		<div className="d-flex flex-wrap py-3">
-			{entries.map((item) => (
+			{entries?.map((item) => (
 				<MusicianCardExplore
 					key={item.id}
 					id={item.id}

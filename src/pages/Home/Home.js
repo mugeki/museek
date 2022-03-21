@@ -1,14 +1,14 @@
-import Navbar from "../../components/Navbar";
-import NavbarGuest from "../../components/NavbarGuest";
-import SearchInput from "./SearchInput";
-import MusicianCard from "./MusicianCard";
-import useGetNewestMusicianList from "../../hooks/useGetNewestMusicianList";
-import useGetPopularMusicianList from "../../hooks/useGetPopularMusicianList";
-import styles from "./Home.module.css";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import Loading from "../../components/Loading";
-import client from "../../apollo-client";
+import Navbar from '../../components/Navbar';
+import NavbarGuest from '../../components/NavbarGuest';
+import SearchInput from './SearchInput';
+import MusicianCard from './MusicianCard';
+import useGetNewestMusicianList from '../../hooks/useGetNewestMusicianList';
+import useGetPopularMusicianList from '../../hooks/useGetPopularMusicianList';
+import styles from './Home.module.css';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import Loading from '../../components/Loading';
+import client from '../../apollo-client';
 
 export default function Home() {
 	const isLoggedIn = useSelector((state) => state.auth.login);

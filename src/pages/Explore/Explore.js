@@ -1,17 +1,17 @@
-import Navbar from "../../components/Navbar";
-import NavbarGuest from "../../components/NavbarGuest";
-import SearchLokasiInput from "./SearchLokasiInput";
-import CategoryDropdown from "./CategoryDropdown";
-import SortDropdown from "./SortDropdown";
-import useGetMusicianByFilter from "../../hooks/useGetMusicianByFilter";
-import Loading from "../../components/Loading";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import MusicianList from "./MusicianList";
-import { deleteKeyword } from "../../store/keywordSlice";
-import client from "../../apollo-client";
-import styles from "./Explore.module.css";
-import LoadingSmallOrange from "../../components/LoadingSmallOrange";
+import Navbar from '../../components/Navbar';
+import NavbarGuest from '../../components/NavbarGuest';
+import SearchLokasiInput from './SearchLokasiInput';
+import CategoryDropdown from './CategoryDropdown';
+import SortDropdown from './SortDropdown';
+import useGetMusicianByFilter from '../../hooks/useGetMusicianByFilter';
+import Loading from '../../components/Loading';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import MusicianList from './MusicianList';
+import { deleteKeyword } from '../../store/keywordSlice';
+import client from '../../apollo-client';
+import styles from './Explore.module.css';
+import LoadingSmallOrange from '../../components/LoadingSmallOrange';
 
 export default function Explore() {
 	const isLoggedIn = useSelector((state) => state.auth.login);
@@ -20,16 +20,16 @@ export default function Explore() {
 	const [loadingMore, setLoadingMore] = useState(false);
 	const [allDataCount, setAllDataCount] = useState(0);
 	const [filter, setFilter] = useState({
-		date_published: "desc",
+		date_published: 'desc',
 		keyword: keyword,
 		instrument: [
-			"Vokal",
-			"Gitar",
-			"Bass",
-			"Brass",
-			"Perkusi",
-			"Piano",
-			"Strings",
+			'Vokal',
+			'Gitar',
+			'Bass',
+			'Brass',
+			'Perkusi',
+			'Piano',
+			'Strings',
 		],
 	});
 
@@ -44,7 +44,7 @@ export default function Explore() {
 		await fetchMore({
 			variables: {
 				...filter,
-				offset: dataFilter.user.length,
+				offset: dataFilter?.user?.length,
 			},
 		});
 
@@ -53,7 +53,7 @@ export default function Explore() {
 
 	useEffect(() => {
 		if (!loadingFilter && dataFilter) {
-			setAllDataCount(dataFilter.user_aggregate.aggregate.count);
+			setAllDataCount(dataFilter?.user_aggregate.aggregate.count);
 		}
 	}, [loadingFilter, dataFilter]);
 
@@ -88,21 +88,21 @@ export default function Explore() {
 			</div>
 			<div className="container my-3 d-flex flex-column">
 				{!loadingFilter ? (
-					dataFilter?.user.length === 0 ? (
+					dataFilter?.user?.length === 0 ? (
 						<p className="text-center">Tidak ditemukan hasil yang cocok.</p>
 					) : (
 						<>
 							<MusicianList entries={dataFilter?.user} />
 							{loadingFilter ? (
-								""
+								''
 							) : loadingMore ? (
 								<LoadingSmallOrange w="34" h="34" />
-							) : dataFilter.user.length === allDataCount ? (
+							) : dataFilter?.user?.length === allDataCount ? (
 								<p className="text-center">Semua data telah ditampilkan.</p>
 							) : (
 								<button
 									className={`${styles.button} py-1 px-3 rounded align-self-center`}
-									style={{ cursor: "pointer" }}
+									style={{ cursor: 'pointer' }}
 									onClick={onLoadMore}
 								>
 									Lihat lainnya
